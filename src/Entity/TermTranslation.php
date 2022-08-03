@@ -15,29 +15,18 @@ class TermTranslation
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?Term $term = null;
-
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
     #[ORM\Column(type: Types::TEXT)]
     private ?string $description = null;
 
+    #[ORM\OneToOne(mappedBy: 'translation', cascade: ['persist', 'remove'])]
+    private ?Term $term = null;
+
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getTerm(): ?Term
-    {
-        return $this->term;
-    }
-
-    public function setTerm(Term $term): void
-    {
-        $this->term = $term;
     }
 
     public function getName(): ?string
@@ -58,5 +47,27 @@ class TermTranslation
     public function setDescription(string $description): void
     {
         $this->description = $description;
+    }
+
+    public function getTerm(): ?Term
+    {
+        return $this->term;
+    }
+
+    public function setTerm(?Term $term): self
+    {
+        // unset the owning side of the relation if necessary
+        if ($term === null && $this->term !== null) {
+            $this->term->setTranslation(null);
+        }
+
+        // set the owning side of the relation if necessary
+        if ($term !== null && $term->getTranslation() !== $this) {
+            $term->setTranslation($this);
+        }
+
+        $this->term = $term;
+
+        return $this;
     }
 }

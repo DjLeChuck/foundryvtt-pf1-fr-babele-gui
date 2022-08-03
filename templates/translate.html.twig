@@ -4,4 +4,12 @@
   <h1 class="mt-5">Traduire</h1>
 
   <p class="lead">Interface web de traduction des fichiers Babele.</p>
+
+  <p>Sélectionnez le fichier pack à traduire :</p>
+
+  <ul>
+    {% for pack in packs %}
+      <li><a href="{{ path('app_translate_pack', { pack: pack }) }}">{{ pack }}</a></li>
+    {% endfor %}
+  </ul>
 {% endblock body %}

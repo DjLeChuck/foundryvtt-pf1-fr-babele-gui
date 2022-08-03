@@ -37,6 +37,9 @@ webpack_encore:
 framework:
     assets:
         json_manifest_path: '%kernel.project_dir%/public/build/manifest.json'
+        packages:
+            svg:
+                base_path: 'build/images/svg'
 
 #when@prod:
 #    webpack_encore:

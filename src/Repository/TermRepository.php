@@ -52,6 +52,33 @@ class TermRepository extends ServiceEntityRepository
         return $qb->getQuery()->setHint(Query::HINT_FORCE_PARTIAL_LOAD, 1)->getResult();
     }
 
+    public function findWithTranslation(int $id): ?Term
+    {
+        $qb = $this->createQueryBuilder('o');
+        $qb
+            ->select('o, t')
+            ->leftJoin('o.translation', 't')
+            ->where('o = :term')
+            ->setParameter('term', $id)
+        ;
+
+        return $qb->getQuery()->getOneOrNullResult();
+    }
+
+    public function findByPack(string $pack): array
+    {
+        $qb = $this->createQueryBuilder('o');
+        $qb
+            ->addSelect('t')
+            ->leftJoin('o.translation', 't')
+            ->where('o.pack = :pack')
+            ->orderBy('o.name')
+            ->setParameter('pack', $pack)
+        ;
+
+        return $qb->getQuery()->getResult();
+    }
+
     public function findPacks(): array
     {
         $qb = $this->createQueryBuilder('o');

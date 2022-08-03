@@ -25,6 +25,9 @@ class Term
     #[ORM\Column(length: 255)]
     private ?string $pack = null;
 
+    #[ORM\OneToOne(inversedBy: 'term', cascade: ['persist', 'remove'])]
+    private ?TermTranslation $translation = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -58,5 +61,17 @@ class Term
     public function setPack(string $pack): void
     {
         $this->pack = $pack;
+    }
+
+    public function getTranslation(): ?TermTranslation
+    {
+        return $this->translation;
+    }
+
+    public function setTranslation(?TermTranslation $translation): self
+    {
+        $this->translation = $translation;
+
+        return $this;
     }
 }

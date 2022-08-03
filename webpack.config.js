@@ -57,6 +57,14 @@ Encore
 
   // enables Sass/SCSS support
   .enableSassLoader()
+
+  .copyFiles([
+    {
+      from: './assets/images',
+      to: 'images/[path][name].[ext]',
+      pattern: /\.(png|jpg|jpeg|svg)$/,
+    },
+  ])
 ;
 
 module.exports = Encore.getWebpackConfig();
