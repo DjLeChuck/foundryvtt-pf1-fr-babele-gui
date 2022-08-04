@@ -74,4 +74,14 @@ class Term
 
         return $this;
     }
+
+    public function nameSeemsUntranslated(): bool
+    {
+        return $this->getName() === $this->getTranslation()?->getName();
+    }
+
+    public function descriptionSeemsUntranslated(): bool
+    {
+        return $this->getDescription() === $this->getTranslation()?->getDescription();
+    }
 }

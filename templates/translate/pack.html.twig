@@ -4,40 +4,76 @@
   <h1 class="mt-5">Traduction du pack <strong>{{ pack }}</strong></h1>
 
   <form action="" method="post">
-    <table class="table table-striped">
-      <thead>
-        <tr>
-          <th scope="col">Nom VO</th>
-          <th scope="col">Nom VF</th>
-          <th scope="col">Description VO</th>
-          <th scope="col">Description VF</th>
-        </tr>
-      </thead>
-      <tbody>
-        {# @var term \App\Entity\Term #}
-        {% for term in terms %}
-          <tr>
-            <td>{{ term.name }}</td>
-            <td>
-              <div class="form-group">
-                <input type="text" class="form-control" placeholder="{{ term.name }}"
-                       name="translation[{{ term.id }}][name]" value="{{ term.translation.name ?? '' }}" />
-              </div>
-            </td>
-            <td>
-              {#            {{ term.description }} #}
-              <img src="{{ asset('eye-open.svg', 'svg') }}" alt="Afficher" />
-            </td>
-            <td>
-              {#            {{ term.translation.description ?? '' }} #}
-              <img src="{{ asset('eye-open.svg', 'svg') }}" alt="Cacher" />
-            </td>
-          </tr>
-        {% endfor %}
-      </tbody>
-    </table>
+    <div class="input-group mb-3">
+      <input type="text" class="form-control" placeholder="Nom VO, Nom VF" aria-label="Nom VO, Nom VF"
+             aria-describedby="search-btn" name="filter" value="{{ filter }}">
+      <button class="btn btn-primary" type="button" id="search-btn">Filtrer</button>
+    </div>
 
-    <button type="submit" class="btn btn-primary">Enregistrer</button>
+    <div class="table-responsive">
+      <table class="table table-striped" {{ stimulus_controller('table-multirow', {
+        open: asset('eye-open.svg', 'svg'),
+        close: asset('eye-close.svg', 'svg'),
+      }) }}>
+        <thead>
+          <tr>
+            <th scope="col">Nom VO</th>
+            <th scope="col">Nom VF</th>
+            <th scope="col">Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          {# @var term \App\Entity\Term #}
+          {% for term in pagination %}
+            <tr>
+              <td>{{ term.name }}</td>
+              <td>
+                <div class="form-group">
+                  {% if term.nameSeemsUntranslated %}
+                  <div class="input-group">
+                    {% endif %}
+                    <input type="text" class="form-control" placeholder="{{ term.name }}"
+                           name="translation[{{ term.id }}][name]" value="{{ term.translation.name ?? '' }}" />
+                    {% if term.nameSeemsUntranslated %}
+                    <span class="input-group-text"><img src="{{ asset('alert.svg', 'svg') }}" alt="Attention" /></span>
+                  </div>
+                  {% endif %}
+                </div>
+              </td>
+              <td>
+                <button type="button" class="btn" {{ stimulus_action('table-multirow', 'toggle', 'click') }}
+                        data-term="{{ term.id }}">
+                  <img src="{{ asset('eye-open.svg', 'svg') }}" alt="" />
+                </button>
+              </td>
+            </tr>
+            <tr data-term="{{ term.id }}" class="d-none" {{ stimulus_target('table-multirow', 'hiddenRow') }}>
+              <td colspan="3">
+                <div class="row">
+                  <div class="col-6">{{ term.description|raw }}</div>
+                  <div class="col-6">
+                    <div {{ stimulus_controller('ckeditor') }}>
+                      <div {{ stimulus_target('ckeditor', 'editor') }}></div>
+                      <textarea name="translation[{{ term.id }}][description]" class="d-none"
+                          {{ stimulus_target('ckeditor', 'content') }}>{{ term.translation.description|raw }}</textarea>
+                    </div>
+                  </div>
+                </div>
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+    <div class="row mt-2">
+      <div class="col-10">
+        {{ knp_pagination_render(pagination) }}
+      </div>
+      <div class="col-2">
+        <button type="submit" class="btn btn-primary float-end">Enregistrer</button>
+      </div>
+    </div>
 
     <input type="hidden" name="_csrf_token" value="{{ csrf_token('translate') }}" />
   </form>

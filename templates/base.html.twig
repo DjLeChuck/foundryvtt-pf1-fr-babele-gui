@@ -22,12 +22,15 @@
             <span class="navbar-toggler-icon"></span>
           </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
+            {% set is_translation_page = 'app_translate' in app.request.get('_route') %}
             <ul class="navbar-nav me-auto mb-2 mb-md-0">
               <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="{{ path('app_home') }}">Accueil</a>
+                <a class="nav-link{{ not is_translation_page ? ' active' }}" href="{{ path('app_home') }}"
+                    {{ not is_translation_page ? ' aria-current="page"' }}>Accueil</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="{{ path('app_translate') }}">Traduire</a>
+                <a class="nav-link{{ is_translation_page ? ' active' }}" href="{{ path('app_translate') }}"
+                    {{ is_translation_page ? ' aria-current="page"' }}>Traduire</a>
               </li>
             </ul>
           </div>

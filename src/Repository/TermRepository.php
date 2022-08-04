@@ -78,7 +78,7 @@ class TermRepository extends ServiceEntityRepository
         return $qb->getQuery()->getOneOrNullResult();
     }
 
-    public function findByPack(string $pack): array
+    public function getByPackQuery(string $pack, ?string $filter): Query
     {
         $qb = $this->createQueryBuilder('o');
         $qb
@@ -89,7 +89,14 @@ class TermRepository extends ServiceEntityRepository
             ->setParameter('pack', $pack)
         ;
 
-        return $qb->getQuery()->getResult();
+        if (null !== $filter) {
+            $qb
+                ->andWhere($qb->expr()->orX('LOWER(o.name) LIKE :filter', 'LOWER(t.name) LIKE :filter'))
+                ->setParameter('filter', mb_strtolower('%'.$filter.'%'))
+            ;
+        }
+
+        return $qb->getQuery();
     }
 
     public function findPacks(): array
