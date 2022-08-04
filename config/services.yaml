@@ -29,3 +29,7 @@ services:
     App\Formatter\TermDataFormatter:
         arguments:
             - !tagged_iterator 'app.term_formatter'
+
+    App\Security\DiscordGuildAccess:
+        arguments:
+            $guildId: '%env(DISCORD_GUILD_ID)%'

@@ -4,4 +4,34 @@
   <h1 class="mt-5">Pathfinder 1 - Traduction FR (Babele)</h1>
 
   <p class="lead">Interface web de traduction des fichiers Babele.</p>
+
+  {% if app.user %}
+    <p>
+      Accéder à l'<a href="{{ path('app_translate') }}">interface de traduction</a>.
+    </p>
+  {% else %}
+    <p>
+      Afin de pouvoir accéder à l'interface de traduction, il faut vous
+      <a href="{{ path('hwi_oauth_service_redirect', { service: 'discord' }) }}">connecter avec votre compte Discord</a>.
+    </p>
+
+    <div class="alert alert-primary d-flex align-items-center" role="alert">
+      <div>
+        <p>Le site va stocker votre e-mail si vous modifiez une traduction, mais il ne fera rien d'autre avec.</p>
+        <p>Voici à quoi servent les permissions demandées pour la connexion via Discord :</p>
+
+        <ul>
+          <li>
+            <strong>Accéder à ton nom d'utilisateur, ton avatar et ta bannière</strong> et
+            <strong>Accéder à ton adresse e-mail</strong> permettent d'avoir accès à votre e-mail,
+          </li>
+          <li>
+            <strong>Jette un œil à tes informations de membre (pseudo, avatar, rôles, etc.) pour les serveurs dans lesquels tu es</strong>
+            permet de savoir si vous faîtes bien partis du Discord de
+            <a href="https://discord.com/invite/pPSDNJk">La Fonderie</a>.
+          </li>
+        </ul>
+      </div>
+    </div>
+  {% endif %}
 {% endblock body %}

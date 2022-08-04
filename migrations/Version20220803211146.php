@@ -31,7 +31,6 @@ final class Version20220803211146 extends AbstractMigration
     public function down(Schema $schema): void
     {
         // this down() migration is auto-generated, please modify it to your needs
-        $this->addSql('CREATE SCHEMA public');
         $this->addSql('ALTER TABLE app_term DROP CONSTRAINT FK_A021C22D9CAA2B25');
         $this->addSql('DROP INDEX UNIQ_A021C22D9CAA2B25');
         $this->addSql('ALTER TABLE app_term DROP translation_id');

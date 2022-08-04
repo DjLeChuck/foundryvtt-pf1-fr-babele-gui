@@ -1,0 +1,10 @@
+hwi_oauth:
+    resource_owners:
+        discord:
+            class: \App\OAuth2\DiscordResourceOwner
+            client_id: '%env(DISCORD_CLIENT_ID)%'
+            client_secret: '%env(DISCORD_CLIENT_SECRET)%'
+            scope: 'identify email guilds.members.read'
+            options:
+                csrf: true
+                refresh_on_expire: true

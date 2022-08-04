@@ -33,6 +33,21 @@
                     {{ is_translation_page ? ' aria-current="page"' }}>Traduire</a>
               </li>
             </ul>
+
+            <div class="d-flex text-light">
+              {% if app.user %}
+                <span class="align-middle">
+                  Bonjour {{ app.user.nickname }} !&nbsp;
+                  <a href="{{ path('app_logout') }}" class="text-muted small">
+                    (Se déconnecter)
+                  </a>
+                </span>
+              {% else %}
+                <a href="{{ path('hwi_oauth_service_redirect', { service: 'discord' }) }}" class="btn btn-primary">
+                  Se connecter via Discord
+                </a>
+              {% endif %}
+            </div>
           </div>
         </div>
       </nav>
