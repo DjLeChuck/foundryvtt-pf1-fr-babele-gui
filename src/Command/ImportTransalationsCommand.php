@@ -2,7 +2,7 @@
 
 namespace App\Command;
 
-use App\Importer\PackImporter;
+use App\Importer\TranslationImporter;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -13,14 +13,14 @@ use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
 
 #[AsCommand(
-    name: 'app:import:packs',
-    description: 'Importe les fichiers pack du système en BDD',
+    name: 'app:import:transalations',
+    description: 'Importe les fichiers de traduction des pack du système en BDD',
 )]
-class ImportPacksCommand extends Command
+class ImportTransalationsCommand extends Command
 {
-    private PackImporter $importer;
+    private TranslationImporter $importer;
 
-    public function __construct(PackImporter $importer)
+    public function __construct(TranslationImporter $importer)
     {
         parent::__construct();
 
@@ -29,7 +29,7 @@ class ImportPacksCommand extends Command
 
     protected function configure(): void
     {
-        $this->addArgument('path', InputArgument::REQUIRED, 'Répertoire de stockage des packs');
+        $this->addArgument('path', InputArgument::REQUIRED, 'Répertoire de stockage des traductions');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
@@ -46,7 +46,7 @@ class ImportPacksCommand extends Command
 
         $finder = new Finder();
 
-        foreach ($finder->in($path)->files()->sortByName()->name('*.db') as $file) {
+        foreach ($finder->in($path)->files()->sortByName()->name('*.json') as $file) {
             $io->info(sprintf('Import du fichier %s', $file->getFilename()));
 
             $this->importer->import($file, $io);

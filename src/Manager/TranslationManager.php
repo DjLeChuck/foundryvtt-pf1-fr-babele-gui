@@ -24,14 +24,14 @@ class TranslationManager
         $this->em = $em;
     }
 
-    public function updateTranslation(int $id, array $data): void
+    public function updateTranslation(int|Term $term, array $data): void
     {
-        $term = $this->termRepository->findWithTranslation($id);
-        if (null === $term) {
-            throw new \InvalidArgumentException(sprintf('Terme #%u inexistant', $id));
+        $entity = $term instanceof Term ? $term : $this->termRepository->findWithTranslation($term);
+        if (null === $entity) {
+            throw new \InvalidArgumentException(sprintf('Terme #%u inexistant', $term));
         }
 
-        $translation = $this->getTranslation($term);
+        $translation = $this->getTranslation($entity);
         $translation->setName($data['name']);
         $translation->setDescription($data['description'] ?? '');
 

@@ -52,6 +52,19 @@ class TermRepository extends ServiceEntityRepository
         return $qb->getQuery()->setHint(Query::HINT_FORCE_PARTIAL_LOAD, 1)->getResult();
     }
 
+    public function findPartialWithTranslationByPack(string $pack): array
+    {
+        $qb = $this->createQueryBuilder('o');
+        $qb
+            ->select('PARTIAL o.{id, name}, t')
+            ->leftJoin('o.translation', 't')
+            ->where('o.pack = :pack')
+            ->setParameter('pack', $pack)
+        ;
+
+        return $qb->getQuery()->setHint(Query::HINT_FORCE_PARTIAL_LOAD, 1)->getResult();
+    }
+
     public function findWithTranslation(int $id): ?Term
     {
         $qb = $this->createQueryBuilder('o');
