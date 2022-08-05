@@ -1,7 +1,17 @@
 {% extends 'base.html.twig' %}
 
+{% block breadcrumb %}
+  {% set entries = [{
+    label: 'Traduire',
+    url: path('app_translate'),
+  }, {
+    label: pack,
+  }] %}
+  {{ parent() }}
+{% endblock breadcrumb %}
+
 {% block body %}
-  <h1 class="mt-5">Traduction du pack <strong>{{ pack }}</strong></h1>
+  <h1 class="mt-3">Traduction du pack <strong>{{ pack }}</strong></h1>
 
   <form action="" method="post">
     <div class="input-group mb-3">

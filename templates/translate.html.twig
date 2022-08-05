@@ -1,7 +1,12 @@
 {% extends 'base.html.twig' %}
 
+{% block breadcrumb %}
+  {% set entries = [{ label: 'Traduire' }] %}
+  {{ parent() }}
+{% endblock breadcrumb %}
+
 {% block body %}
-  <h1 class="mt-5">Traduire</h1>
+  <h1 class="mt-3">Traduire</h1>
 
   <p class="lead">Interface web de traduction des fichiers Babele.</p>
 

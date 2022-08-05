@@ -55,6 +55,21 @@
 
     <main class="flex-shrink-0">
       <div class="container">
+        {% block breadcrumb %}
+          {% set breadcrumb_entries = [{ label: 'Accueil', url: path('app_home') }]|merge(entries|default([])) %}
+
+          <nav aria-label="breadcrumb" class="m-2">
+            <ol class="breadcrumb">
+              {% for item in breadcrumb_entries %}
+                <li class="breadcrumb-item{{ loop.last ? ' active' }}"{{ loop.last ? '  aria-current="page"' }}>
+                  {% if not loop.last %}<a href="{{ item.url }}">{% endif %}
+                    {{ item.label }}
+                    {% if not loop.last %}</a>{% endif %}
+                </li>
+              {% endfor %}
+            </ol>
+          </nav>
+        {% endblock breadcrumb %}
         {% block body %}{% endblock %}
       </div>
     </main>
