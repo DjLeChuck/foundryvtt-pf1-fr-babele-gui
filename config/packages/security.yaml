@@ -14,7 +14,7 @@ security:
             oauth:
                 resource_owners:
                     discord: '/login/check-discord'
-                login_path: /login
+                login_path: /
                 use_forward: false
                 failure_path: /
                 oauth_user_provider:
