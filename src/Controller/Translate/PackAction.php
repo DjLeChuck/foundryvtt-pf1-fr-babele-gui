@@ -2,6 +2,8 @@
 
 namespace App\Controller\Translate;
 
+use App\DTO\FilterPack;
+use App\Form\FilterPackType;
 use App\Manager\TranslationManager;
 use App\Repository\TermRepository;
 use Knp\Component\Pager\PaginatorInterface;
@@ -10,7 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route('/translate/{pack}', name: 'app_translate_pack')]
+#[Route('/translate/{pack}', name: 'app_translate_pack', methods: 'GET')]
 class PackAction extends AbstractController
 {
     public function __invoke(
@@ -20,30 +22,19 @@ class PackAction extends AbstractController
         TranslationManager $translationManager,
         PaginatorInterface $paginator
     ): Response {
-        $filter = $request->request->get('filter');
+        $filterPack = new FilterPack($pack);
+        $form = $this->createForm(FilterPackType::class, $filterPack);
 
-        if (empty($filter)) {
-            $translations = $request->request->all('translation');
-            if (!empty($translations)) {
-                if (!$this->isCsrfTokenValid('translate', $request->request->get('_csrf_token'))) {
-                    throw $this->createAccessDeniedException();
-                }
+        $form->handleRequest($request);
 
-                foreach ($translations as $termId => $data) {
-                    $translationManager->updateTranslation($termId, $data);
-                }
+        $form->isSubmitted() && $form->isValid();
 
-                $translationManager->flush();
-            }
-        } elseif (!$this->isCsrfTokenValid('translate', $request->request->get('_csrf_token'))) {
-            throw $this->createAccessDeniedException();
-        }
-
-        return $this->render('translate/pack.html.twig', [
+        return $this->renderForm('translate/pack.html.twig', [
+            'form'       => $form,
             'pack'       => $pack,
-            'filter'     => $filter,
+            'filter'     => '', // $filter,
             'pagination' => $paginator->paginate(
-                $termRepository->getByPackQuery($pack, $filter),
+                $termRepository->getByPackQuery($filterPack),
                 $request->query->getInt('page', 1),
                 20
             ),

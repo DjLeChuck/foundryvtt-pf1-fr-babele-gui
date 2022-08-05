@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\DTO\FilterPack;
 use App\Entity\Term;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\Query;
@@ -78,7 +79,7 @@ class TermRepository extends ServiceEntityRepository
         return $qb->getQuery()->getOneOrNullResult();
     }
 
-    public function getByPackQuery(string $pack, ?string $filter): Query
+    public function getByPackQuery(FilterPack $filter): Query
     {
         $qb = $this->createQueryBuilder('o');
         $qb
@@ -86,14 +87,18 @@ class TermRepository extends ServiceEntityRepository
             ->leftJoin('o.translation', 't')
             ->where('o.pack = :pack')
             ->orderBy('o.name')
-            ->setParameter('pack', $pack)
+            ->setParameter('pack', $filter->getPack())
         ;
 
-        if (null !== $filter) {
+        if (null !== $filter->getTerm()) {
             $qb
                 ->andWhere($qb->expr()->orX('LOWER(o.name) LIKE :filter', 'LOWER(t.name) LIKE :filter'))
-                ->setParameter('filter', mb_strtolower('%'.$filter.'%'))
+                ->setParameter('filter', mb_strtolower('%'.$filter->getTerm().'%'))
             ;
+        }
+
+        if ($filter->onlyUntranslated()) {
+            $qb->andWhere('o.name = t.name');
         }
 
         return $qb->getQuery();
