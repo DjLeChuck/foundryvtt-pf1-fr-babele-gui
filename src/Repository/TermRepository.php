@@ -115,4 +115,21 @@ class TermRepository extends ServiceEntityRepository
 
         return array_map(static fn(array $row) => $row['pack'], $qb->getQuery()->getArrayResult());
     }
+
+    public function getStatisticsByPack(): array
+    {
+        $qb = $this->createQueryBuilder('o');
+        $qb
+            ->select(
+                'o.pack', 'COUNT(o.id) AS total',
+                'SUM(CASE WHEN o.name = t.name OR t.id IS NULL THEN 1 ELSE 0 END) untranslated',
+                'SUM(CASE WHEN o.name != t.name THEN 1 ELSE 0 END) translated'
+            )
+            ->leftJoin('o.translation', 't')
+            ->groupBy('o.pack')
+            ->orderBy('o.pack')
+        ;
+
+        return $qb->getQuery()->getArrayResult();
+    }
 }
