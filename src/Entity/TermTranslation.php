@@ -4,10 +4,12 @@ namespace App\Entity;
 
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 #[ORM\Entity]
 #[ORM\Table(name: 'app_term_translation')]
 #[ORM\Index(columns: ['name'], name: 'term_translation_name_idx')]
+#[Gedmo\Loggable]
 class TermTranslation
 {
     #[ORM\Id]
@@ -16,13 +18,19 @@ class TermTranslation
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Gedmo\Versioned]
     private ?string $name = null;
 
     #[ORM\Column(type: Types::TEXT)]
+    #[Gedmo\Versioned]
     private ?string $description = null;
 
     #[ORM\OneToOne(mappedBy: 'translation', cascade: ['persist', 'remove'])]
     private ?Term $term = null;
+
+    #[ORM\Column(type: Types::STRING, nullable: true)]
+    #[Gedmo\Blameable(on: 'update')]
+    private string $updatedBy;
 
     public function getId(): ?int
     {
@@ -69,5 +77,10 @@ class TermTranslation
         $this->term = $term;
 
         return $this;
+    }
+
+    public function getUpdatedBy(): ?string
+    {
+        return $this->updatedBy;
     }
 }
