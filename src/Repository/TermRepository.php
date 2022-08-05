@@ -18,6 +18,8 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class TermRepository extends ServiceEntityRepository
 {
+    public const PACK_SPELLS = 'spells';
+
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Term::class);
@@ -131,5 +133,19 @@ class TermRepository extends ServiceEntityRepository
         ;
 
         return $qb->getQuery()->getArrayResult();
+    }
+
+    public function findSpellsWithDescription(): array
+    {
+        $qb = $this->createQueryBuilder('o');
+        $qb
+            ->select('PARTIAL o.{id, name}, t')
+            ->innerJoin('o.translation', 't')
+            ->where('o.pack = :pack')
+            ->andWhere('t.description IS NOT NULL')
+            ->setParameter('pack', self::PACK_SPELLS)
+        ;
+
+        return $qb->getQuery()->setHint(Query::HINT_FORCE_PARTIAL_LOAD, 1)->getResult();
     }
 }
