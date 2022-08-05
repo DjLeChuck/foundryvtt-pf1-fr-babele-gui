@@ -13,10 +13,10 @@ use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
 
 #[AsCommand(
-    name: 'app:import:transalations',
+    name: 'app:import:translations',
     description: 'Importe les fichiers de traduction des pack du système en BDD',
 )]
-class ImportTransalationsCommand extends Command
+class ImportTranslationsCommand extends Command
 {
     private TranslationImporter $importer;
 
