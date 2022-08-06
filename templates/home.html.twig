@@ -50,9 +50,13 @@
       {% for dataset in statistics %}
         <tr>
           <th scope="row">
-            <a href="{{ path('app_translate_pack', { pack: dataset.pack }) }}">
+            {% if app.user %}
+              <a href="{{ path('app_translate_pack', { pack: dataset.pack }) }}">
+                {{ dataset.pack }}
+              </a>
+            {% else %}
               {{ dataset.pack }}
-            </a>
+            {% endif %}
           </th>
           <td>{{ dataset.total }}</td>
           <td>{{ dataset.untranslated }}</td>
