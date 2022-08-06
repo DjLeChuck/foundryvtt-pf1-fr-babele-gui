@@ -64,15 +64,26 @@
                 </button>
               </td>
             </tr>
-            <tr data-term="{{ term.id }}" class="d-none" {{ stimulus_target('table-multirow', 'hiddenRow') }}>
+            <tr data-term="{{ term.id }}" class="d-none" {{ stimulus_target('table-multirow', 'hiddenRow') }}
+                {{ stimulus_controller('translate', { url: path('app_translate_do_translation') }) }}>
               <td colspan="3">
                 <div class="row">
-                  <div class="col-6">{{ term.description|raw }}</div>
+                  <div class="col-6" {{ stimulus_target('translate', 'input') }}>{{ term.description|raw }}</div>
                   <div class="col-6">
-                    <div {{ stimulus_controller('ckeditor') }}>
+                    <div {{ stimulus_controller('ckeditor') }} {{ stimulus_action('ckeditor', 'update', 'translate:translated@window') }}>
+                      {% if term.descriptionSeemsUntranslated %}
+                        <button type="button" class="btn" {{ stimulus_action('translate', 'do') }}>
+                          <span class="spinner-border spinner-border-sm visually-hidden" role="status" aria-hidden="true"
+                          {{ stimulus_target('translate', 'spinner') }}></span>
+                          <img src="{{ asset('build/images/svg/translate.svg') }}" alt="Traduire" width="24"
+                              {{ stimulus_target('translate', 'img') }}/>
+                          Traduire automatiquement depuis l'anglais
+                        </button>
+                      {% endif %}
                       <div {{ stimulus_target('ckeditor', 'editor') }}></div>
                       <textarea name="translation[{{ term.id }}][description]" class="d-none"
-                          {{ stimulus_target('ckeditor', 'content') }}>{{ term.translation.description|raw }}</textarea>
+                          {{ stimulus_target('ckeditor', 'content') }}
+                          {{ stimulus_target('translate', 'output') }}>{{ term.translation.description|raw }}</textarea>
                     </div>
                   </div>
                 </div>

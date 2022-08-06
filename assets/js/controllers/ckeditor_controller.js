@@ -32,4 +32,12 @@ export default class extends Controller {
         });
     }
   }
+
+  update() {
+    if (!this.editor) {
+      return;
+    }
+
+    this.editor.setData(this.contentTarget.innerText);
+  }
 }
