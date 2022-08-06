@@ -49,7 +49,11 @@
     <tbody>
       {% for dataset in statistics %}
         <tr>
-          <th scope="row">{{ dataset.pack }}</th>
+          <th scope="row">
+            <a href="{{ path('app_translate_pack', { pack :pack }) }}">
+              {{ dataset.pack }}
+            </a>
+          </th>
           <td>{{ dataset.total }}</td>
           <td>{{ dataset.untranslated }}</td>
           <td>{{ dataset.translated }}</td>
