@@ -20,10 +20,11 @@ class DiscordResourceOwner extends GenericOAuth2ResourceOwner
         parent::configureOptions($resolver);
 
         $resolver->setDefaults([
-            'authorization_url' => 'https://discord.com/api/oauth2/authorize',
-            'access_token_url'  => 'https://discord.com/api/oauth2/token',
-            'infos_url'         => 'https://discord.com/api/users/@me',
-            'scope'             => 'identify email',
+            'use_authorization_to_get_token' => false,
+            'authorization_url'              => 'https://discord.com/api/oauth2/authorize',
+            'access_token_url'               => 'https://discord.com/api/oauth2/token',
+            'infos_url'                      => 'https://discord.com/api/users/@me',
+            'scope'                          => 'identify email',
         ]);
     }
 }
