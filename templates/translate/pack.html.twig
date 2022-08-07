@@ -42,17 +42,20 @@
         <tbody>
           {# @var term \App\Entity\Term #}
           {% for term in pagination %}
+            {% set translation_level = term.translationLevel %}
             <tr>
               <td>{{ term.name }}</td>
               <td>
                 <div class="form-group">
-                  {% if term.nameSeemsUntranslated %}
+                  {% if translation_level < 2 %}
                   <div class="input-group">
                     {% endif %}
                     <input type="text" class="form-control" placeholder="{{ term.name }}"
                            name="translation[{{ term.id }}][name]" value="{{ term.translation.name ?? '' }}" />
-                    {% if term.nameSeemsUntranslated %}
-                    <span class="input-group-text"><img src="{{ asset('alert.svg', 'svg') }}" alt="Attention" /></span>
+                    {% if translation_level < 2 %}
+                    <span class="input-group-text {{ translation_level == 1 ? 'bg-warning' : 'bg-danger' }}">
+                      <img src="{{ asset('alert.svg', 'svg') }}" alt="Attention" />
+                    </span>
                   </div>
                   {% endif %}
                 </div>

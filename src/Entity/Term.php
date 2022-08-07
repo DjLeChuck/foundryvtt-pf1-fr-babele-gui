@@ -88,4 +88,9 @@ class Term
             empty($this->getTranslation()->getDescription()) ||
             $this->getDescription() === $this->getTranslation()->getDescription();
     }
+
+    public function translationLevel(): int
+    {
+        return ($this->nameSeemsUntranslated() ? 0 : 1) + ($this->descriptionSeemsUntranslated() ? 0 : 1);
+    }
 }
