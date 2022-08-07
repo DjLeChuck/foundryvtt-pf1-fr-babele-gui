@@ -77,11 +77,15 @@ class Term
 
     public function nameSeemsUntranslated(): bool
     {
-        return $this->getName() === $this->getTranslation()?->getName();
+        return null === $this->getTranslation() ||
+            empty($this->getTranslation()->getDescription()) ||
+            $this->getName() === $this->getTranslation()->getName();
     }
 
     public function descriptionSeemsUntranslated(): bool
     {
-        return $this->getDescription() === $this->getTranslation()?->getDescription();
+        return null === $this->getTranslation() ||
+            empty($this->getTranslation()->getDescription()) ||
+            $this->getDescription() === $this->getTranslation()->getDescription();
     }
 }
