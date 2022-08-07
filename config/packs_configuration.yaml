@@ -1,0 +1,53 @@
+parameters:
+    pack_export_configuration:
+        armors-and-shields:
+            dto: App\DTO\Export\ArmorsAndShields
+            packName: pf1.armors-and-shields.json
+        class-abilities:
+            dto: App\DTO\Export\ClassAbilities
+            packName: pf1.class-abilities.json
+        classes:
+            dto: App\DTO\Export\Classes
+            packName: pf1.classes.json
+        commonbuffs:
+            dto: App\DTO\Export\CommonBuffs
+            packName: pf1.commonbuffs.json
+        conditions:
+            dto: App\DTO\Export\Conditions
+            packName: pf1.conditions.json
+        feats:
+            dto: App\DTO\Export\Feats
+            packName: pf1.feats.json
+        items:
+            dto: App\DTO\Export\Items
+            packName: pf1.items.json
+        monster-templates:
+            dto: App\DTO\Export\MonsterTemplates
+            packName: pf1.monster-templates.json
+        mythic-paths:
+            dto: App\DTO\Export\MythicPaths
+            packName: pf1.mythic-paths.json
+        races:
+            dto: App\DTO\Export\Races
+            packName: pf1.races.json
+        racial-hd:
+            dto: App\DTO\Export\RacialHD
+            packName: pf1.racial-hd.json
+        roll-tables:
+            dto: App\DTO\Export\RollTables
+            packName: pf1.roll-tables.json
+        sample-macros:
+            dto: App\DTO\Export\SampleMacros
+            packName: pf1.sample-macros.json
+        skills:
+            dto: App\DTO\Export\Skills
+            packName: pf1.skills.json
+        spells:
+            dto: App\DTO\Export\Spells
+            packName: pf1.spells.json
+        ultimate-equipment:
+            dto: App\DTO\Export\UltimateEquipment
+            packName: pf1.ultimate-equipment.json
+        weapons-and-ammo:
+            dto: App\DTO\Export\WeaponsAndAmmo
+            packName: pf1.weapons-and-ammo.json

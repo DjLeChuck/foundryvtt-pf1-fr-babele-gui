@@ -148,4 +148,18 @@ class TermRepository extends ServiceEntityRepository
 
         return $qb->getQuery()->setHint(Query::HINT_FORCE_PARTIAL_LOAD, 1)->getResult();
     }
+
+    public function findByPackForExport(string $pack): array
+    {
+        $qb = $this->createQueryBuilder('o', 'o.name');
+        $qb
+            ->select('o.name term, coalesce(t.name, o.name) as name, coalesce(t.description, o.description) as description')
+            ->leftJoin('o.translation', 't')
+            ->where('o.pack = :pack')
+            ->orderBy('o.name')
+            ->setParameter('pack', $pack)
+        ;
+
+        return $qb->getQuery()->getArrayResult();
+    }
 }
