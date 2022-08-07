@@ -61,6 +61,6 @@ class PackExporter
 
     private function getPath(string $path, string $packName): string
     {
-        return sprintf('%s/%s', ltrim($path, '/'), $packName);
+        return sprintf('%s/%s', rtrim($path, '/'), $packName);
     }
 }
