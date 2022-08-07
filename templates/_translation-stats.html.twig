@@ -1,0 +1,28 @@
+<table class="table table-bordered table-striped">
+  <thead>
+    <tr>
+      <th scope="col">Pack</th>
+      <th scope="col">Nb. termes</th>
+      <th scope="col">Nb. non traduits</th>
+      <th scope="col">Nb. traduits</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for dataset in statistics %}
+      <tr>
+        <th scope="row">
+          {% if app.user %}
+            <a href="{{ path('app_translate_pack', { pack: dataset.pack }) }}">
+              {{ dataset.pack }}
+            </a>
+          {% else %}
+            {{ dataset.pack }}
+          {% endif %}
+        </th>
+        <td>{{ dataset.total }}</td>
+        <td>{{ dataset.untranslated }}</td>
+        <td>{{ dataset.translated }}</td>
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
