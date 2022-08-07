@@ -4,7 +4,7 @@ namespace App\DTO\Export;
 
 class WeaponsAndAmmo
 {
-    public string $label = 'Armures et boucliers';
+    public string $label = 'Armes et munitions';
     public array $mapping = [
         'identifiedName' => [
             'path'      => 'data.identifiedName',
