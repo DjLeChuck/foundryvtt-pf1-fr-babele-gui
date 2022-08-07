@@ -4,8 +4,6 @@ namespace App\DTO\Export;
 
 class Races
 {
-    public static string $packName = 'pf1.races.json';
-
     public string $label = 'Races';
     public array $entries;
 

@@ -4,8 +4,6 @@ namespace App\DTO\Export;
 
 class Spells
 {
-    public static string $packName = 'pf1.spells.json';
-
     public string $label = 'Sorts';
     public array $mapping = [
         'identifiedName' => [

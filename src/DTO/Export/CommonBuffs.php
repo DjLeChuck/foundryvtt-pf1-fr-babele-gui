@@ -4,9 +4,7 @@ namespace App\DTO\Export;
 
 class CommonBuffs
 {
-    public static string $packName = 'pf1.commonbuffs.json';
-
-    public string $label = 'Armures et boucliers';
+    public string $label = 'Buffs communs';
     public array $mapping = [
         'identifiedName' => [
             'path'      => 'data.identifiedName',

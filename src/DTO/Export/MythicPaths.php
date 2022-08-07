@@ -4,8 +4,6 @@ namespace App\DTO\Export;
 
 class MythicPaths
 {
-    public static string $packName = 'pf1.mythicpaths.json';
-
     public string $label = 'Voies mythiques';
     public array $entries;
 
