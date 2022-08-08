@@ -3,12 +3,14 @@
 namespace App\Entity;
 
 use Doctrine\DBAL\Types\Types;
+use Doctrine\ORM\Event\PreUpdateEventArgs;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 
 #[ORM\Entity]
 #[ORM\Table(name: 'app_term_translation')]
 #[ORM\Index(columns: ['name'], name: 'term_translation_name_idx')]
+#[ORM\HasLifecycleCallbacks]
 #[Gedmo\Loggable]
 class TermTranslation
 {
@@ -95,5 +97,13 @@ class TermTranslation
     public function setApproved(bool $approved): void
     {
         $this->approved = $approved;
+    }
+
+    #[ORM\PreUpdate]
+    public function resetApprovement(PreUpdateEventArgs $eventArgs): void
+    {
+        if ($eventArgs->hasChangedField('name') || $eventArgs->hasChangedField('description')) {
+            $this->setApproved(false);
+        }
     }
 }
