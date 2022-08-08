@@ -65,6 +65,12 @@
                         data-term="{{ term.id }}">
                   <img src="{{ asset('eye-open.svg', 'svg') }}" alt="" />
                 </button>
+
+                {% if term.translationLevel < 2 and is_granted('approve', term) %}
+                  <a href="{{ path('app_translate_approve', { id: term.id }) }}" class="btn">
+                    <img src="{{ asset('check2-circle.svg', 'svg') }}" alt="" width="24" />
+                  </a>
+                {% endif %}
               </td>
             </tr>
             <tr data-term="{{ term.id }}" class="d-none" {{ stimulus_target('table-multirow', 'hiddenRow') }}
@@ -77,7 +83,7 @@
                       {% if term.descriptionSeemsUntranslated %}
                         <button type="button" class="btn" {{ stimulus_action('translate', 'do') }}>
                           <span class="spinner-border spinner-border-sm visually-hidden" role="status" aria-hidden="true"
-                          {{ stimulus_target('translate', 'spinner') }}></span>
+                              {{ stimulus_target('translate', 'spinner') }}></span>
                           <img src="{{ asset('build/images/svg/translate.svg') }}" alt="Traduire" width="24"
                               {{ stimulus_target('translate', 'img') }}/>
                           Traduire automatiquement depuis l'anglais

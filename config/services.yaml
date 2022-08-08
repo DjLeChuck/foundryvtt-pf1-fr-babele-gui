@@ -47,3 +47,7 @@ services:
     App\Exporter\PackExporter:
         arguments:
             $configuration: '%pack_export_configuration%'
+
+    App\Security\Voter\TermVoter:
+        arguments:
+            $approvers: '%env(json:TRANSLATIONS_APPROVERS)%'
