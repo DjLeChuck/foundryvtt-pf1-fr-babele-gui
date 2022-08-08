@@ -100,7 +100,7 @@ class TermRepository extends ServiceEntityRepository
         }
 
         if ($filter->onlyUntranslated()) {
-            $qb->andWhere('o.name = t.name OR t.description = \'\'');
+            $qb->andWhere('(o.name = t.name OR t.description = \'\') AND t.approved = FALSE');
         }
 
         return $qb->getQuery();
@@ -124,8 +124,8 @@ class TermRepository extends ServiceEntityRepository
         $qb
             ->select(
                 'o.pack', 'COUNT(o.id) AS total',
-                'SUM(CASE WHEN o.name = t.name OR t.id IS NULL THEN 1 ELSE 0 END) untranslated',
-                'SUM(CASE WHEN o.name != t.name THEN 1 ELSE 0 END) translated'
+                'SUM(CASE WHEN (o.name = t.name AND t.approved = FALSE) OR t.id IS NULL THEN 1 ELSE 0 END) untranslated',
+                'SUM(CASE WHEN o.name != t.name OR t.approved = TRUE THEN 1 ELSE 0 END) translated'
             )
             ->leftJoin('o.translation', 't')
             ->groupBy('o.pack')

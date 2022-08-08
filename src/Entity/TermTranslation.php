@@ -32,6 +32,9 @@ class TermTranslation
     #[Gedmo\Blameable(on: 'update')]
     private string $updatedBy;
 
+    #[ORM\Column(type: Types::BOOLEAN, options: ['default' => false])]
+    private bool $approved = false;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -82,5 +85,15 @@ class TermTranslation
     public function getUpdatedBy(): ?string
     {
         return $this->updatedBy;
+    }
+
+    public function isApproved(): bool
+    {
+        return $this->approved;
+    }
+
+    public function setApproved(bool $approved): void
+    {
+        $this->approved = $approved;
     }
 }

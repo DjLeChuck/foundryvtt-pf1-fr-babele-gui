@@ -77,6 +77,10 @@ class Term
 
     public function nameSeemsUntranslated(): bool
     {
+        if ($this->getTranslation()?->isApproved()) {
+            return false;
+        }
+
         return null === $this->getTranslation() ||
             empty($this->getTranslation()->getDescription()) ||
             $this->getName() === $this->getTranslation()->getName();
@@ -84,6 +88,10 @@ class Term
 
     public function descriptionSeemsUntranslated(): bool
     {
+        if ($this->getTranslation()?->isApproved()) {
+            return false;
+        }
+
         return null === $this->getTranslation() ||
             empty($this->getTranslation()->getDescription()) ||
             $this->getDescription() === $this->getTranslation()->getDescription();
