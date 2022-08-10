@@ -26,6 +26,9 @@ class ProcessPackTranslationAction extends AbstractController
             $translationManager->flush();
         }
 
-        return $this->redirectToRoute('app_translate_pack', ['pack' => $pack]);
+        return $this->redirect($request->headers->get(
+            'referer',
+            $this->generateUrl('app_translate_pack', ['pack' => $pack])
+        ));
     }
 }
