@@ -32,7 +32,6 @@ class PackAction extends AbstractController
         return $this->renderForm('translate/pack.html.twig', [
             'form'       => $form,
             'pack'       => $pack,
-            'filter'     => '', // $filter,
             'pagination' => $paginator->paginate(
                 $termRepository->getByPackQuery($filterPack),
                 $request->query->getInt('page', 1),
