@@ -61,10 +61,12 @@
                 </div>
               </td>
               <td>
-                <button type="button" class="btn" {{ stimulus_action('table-multirow', 'toggle', 'click') }}
-                        data-term="{{ term.id }}">
-                  <img src="{{ asset('eye-open.svg', 'svg') }}" alt="" />
-                </button>
+                {% if term.description|length %}
+                  <button type="button" class="btn" {{ stimulus_action('table-multirow', 'toggle', 'click') }}
+                          data-term="{{ term.id }}">
+                    <img src="{{ asset('eye-open.svg', 'svg') }}" alt="" />
+                  </button>
+                {% endif %}
 
                 {% if term.translationLevel < 2 and is_granted('approve', term) %}
                   <a href="{{ path('app_translate_approve', { id: term.id }) }}" class="btn">
@@ -89,10 +91,12 @@
                           Traduire automatiquement depuis l'anglais
                         </button>
                       {% endif %}
-                      <div {{ stimulus_target('ckeditor', 'editor') }}></div>
-                      <textarea name="translation[{{ term.id }}][description]" class="d-none"
-                          {{ stimulus_target('ckeditor', 'content') }}
-                          {{ stimulus_target('translate', 'output') }}>{{ term.translation.description|raw }}</textarea>
+                      {% if term.description|length %}
+                        <div {{ stimulus_target('ckeditor', 'editor') }}></div>
+                        <textarea name="translation[{{ term.id }}][description]" class="d-none"
+                            {{ stimulus_target('ckeditor', 'content') }}
+                            {{ stimulus_target('translate', 'output') }}>{{ term.translation.description|raw }}</textarea>
+                      {% endif %}
                     </div>
                   </div>
                 </div>
