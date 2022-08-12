@@ -100,7 +100,7 @@ class TermRepository extends ServiceEntityRepository
         }
 
         if ($filter->onlyUntranslated()) {
-            $qb->andWhere('(o.name = t.name OR (a.description != \'\' AND t.description = \'\')) AND t.approved = FALSE');
+            $qb->andWhere('(o.name = t.name OR (o.description != \'\' AND t.description = \'\')) AND t.approved = FALSE');
         }
 
         return $qb->getQuery();
