@@ -82,7 +82,7 @@ class Term
         }
 
         return null === $this->getTranslation() ||
-            empty($this->getTranslation()->getDescription()) ||
+            empty($this->getTranslation()->getName()) ||
             $this->getName() === $this->getTranslation()->getName();
     }
 
