@@ -10,6 +10,9 @@ class DataDescriptionValueFormatter implements TermFormatterInterface
         'armors-and-shields', 'class-abilities', 'classes', 'commonbuffs',
         'feats', 'items', 'monster-templates', 'mythic-paths', 'races',
         'racial-hd', 'weapons-and-ammo',
+        // Bestiaries
+        'bestiary-00', 'bestiary-02', 'bestiary-04', 'bestiary-06',
+        'bestiary-08', 'bestiary-11', 'bestiary-15', 'bestiary-20',
     ];
 
     public function supports(string $pack): bool

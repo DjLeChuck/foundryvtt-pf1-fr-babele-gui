@@ -34,6 +34,10 @@ class PackExporter
 
                 $dto = new $configuration['dto']($this->getEntries($pack));
 
+                if (isset($configuration['label'])) {
+                    $dto->label = $configuration['label'];
+                }
+
                 file_put_contents($this->getPath($path, $configuration['packName']), $this->serializer->serialize(
                     $dto,
                     JsonEncoder::FORMAT,

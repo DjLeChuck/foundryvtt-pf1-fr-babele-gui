@@ -3,6 +3,38 @@ parameters:
         armors-and-shields:
             dto: App\DTO\Export\ArmorsAndShields
             packName: pf1.armors-and-shields.json
+        bestiary-00:
+            dto: App\DTO\Export\Bestiary
+            packName: pf1-bestiary.bestiary-00.json
+            label: Bestiaire 00+
+        bestiary-02:
+            dto: App\DTO\Export\Bestiary
+            packName: pf1-bestiary.bestiary-02.json
+            label: Bestiaire 02+
+        bestiary-04:
+            dto: App\DTO\Export\Bestiary
+            packName: pf1-bestiary.bestiary-04.json
+            label: Bestiaire 04+
+        bestiary-06:
+            dto: App\DTO\Export\Bestiary
+            packName: pf1-bestiary.bestiary-06.json
+            label: Bestiaire 06+
+        bestiary-08:
+            dto: App\DTO\Export\Bestiary
+            packName: pf1-bestiary.bestiary-08.json
+            label: Bestiaire 08+
+        bestiary-11:
+            dto: App\DTO\Export\Bestiary
+            packName: pf1-bestiary.bestiary-11.json
+            label: Bestiaire 11+
+        bestiary-15:
+            dto: App\DTO\Export\Bestiary
+            packName: pf1-bestiary.bestiary-15.json
+            label: Bestiaire 15+
+        bestiary-20:
+            dto: App\DTO\Export\Bestiary
+            packName: pf1-bestiary.bestiary-20.json
+            label: Bestiaire 20+
         class-abilities:
             dto: App\DTO\Export\ClassAbilities
             packName: pf1.class-abilities.json
