@@ -162,4 +162,19 @@ class TermRepository extends ServiceEntityRepository
 
         return $qb->getQuery()->getArrayResult();
     }
+
+    public function fetchMatchingBestiary(): array
+    {
+        return $this->_em
+            ->getConnection()
+            ->executeQuery(<<<SQL
+SELECT a.id term_id, b.name_fr
+FROM app_term a
+INNER JOIN bestiary b ON a.name = b.name_en
+WHERE a.pack LIKE 'bestiary%'
+SQL
+            )
+            ->fetchAllAssociative()
+        ;
+    }
 }
