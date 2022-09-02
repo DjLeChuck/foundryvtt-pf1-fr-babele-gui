@@ -177,4 +177,15 @@ SQL
             ->fetchAllAssociative()
         ;
     }
+
+    public function findWithoutTranslation(): array
+    {
+        $qb = $this->createQueryBuilder('o');
+        $qb
+            ->leftJoin('o.translation', 't')
+            ->where('t IS NULL')
+        ;
+
+        return $qb->getQuery()->getResult();
+    }
 }
