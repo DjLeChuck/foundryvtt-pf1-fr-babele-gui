@@ -3,8 +3,11 @@
 namespace App\Command;
 
 use App\Repository\TermRepository;
+use League\HTMLToMarkdown\Converter\TableConverter;
+use League\HTMLToMarkdown\HtmlConverter;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -59,42 +62,42 @@ class ModuleUpdateCommand extends Command
         }
 
         // Export de tous les packs
-        // $command = $this->getApplication()?->find('app:export:packs');
-        // if (null === $command) {
-        //     $io->error('Commande d\'export des packs introuvable.');
-        //
-        //     return self::FAILURE;
-        // }
-        //
-        // $greetInput = new ArrayInput(['path' => $packExportPath]);
-        //
-        // try {
-        //     $returnCode = $command->run($greetInput, $output);
-        //
-        //     if (self::SUCCESS !== $returnCode) {
-        //         throw new \RuntimeException(sprintf('Code de sortie en erreur (%u)', $returnCode));
-        //     }
-        // } catch (\Throwable $e) {
-        //     $io->error(sprintf('Erreur lors de l\'export des packs : %s', $e->getMessage()));
-        //
-        //     return self::FAILURE;
-        // }
-        //
-        // $io->info('Mise à jour des stats de traduction dans le README.md');
-        // $converter = new HtmlConverter();
-        // $converter->getEnvironment()->addConverter(new TableConverter());
-        //
-        // $translationStats = $converter->convert($this->twig->render('_translation-stats.html.twig', [
-        //     'statistics' => $this->termRepository->getStatisticsByPack(),
-        // ]));
-        // $readmePath = sprintf('%s/README.md', $path);
-        // $moduleReadme = preg_replace(
-        //     '/<!-- STATS - BEGIN -->(.*)<!-- STATS - END -->/sm',
-        //     "<!-- STATS - BEGIN -->\n".$translationStats."\n<!-- STATS - END -->",
-        //     file_get_contents($readmePath)
-        // );
-        //
-        // $filesystem->dumpFile($readmePath, $moduleReadme);
+        $command = $this->getApplication()?->find('app:export:packs');
+        if (null === $command) {
+            $io->error('Commande d\'export des packs introuvable.');
+
+            return self::FAILURE;
+        }
+
+        $greetInput = new ArrayInput(['path' => $packExportPath]);
+
+        try {
+            $returnCode = $command->run($greetInput, $output);
+
+            if (self::SUCCESS !== $returnCode) {
+                throw new \RuntimeException(sprintf('Code de sortie en erreur (%u)', $returnCode));
+            }
+        } catch (\Throwable $e) {
+            $io->error(sprintf('Erreur lors de l\'export des packs : %s', $e->getMessage()));
+
+            return self::FAILURE;
+        }
+
+        $io->info('Mise à jour des stats de traduction dans le README.md');
+        $converter = new HtmlConverter();
+        $converter->getEnvironment()->addConverter(new TableConverter());
+
+        $translationStats = $converter->convert($this->twig->render('_translation-stats.html.twig', [
+            'statistics' => $this->termRepository->getStatisticsByPack(),
+        ]));
+        $readmePath = sprintf('%s/README.md', $path);
+        $moduleReadme = preg_replace(
+            '/<!-- STATS - BEGIN -->(.*)<!-- STATS - END -->/sm',
+            "<!-- STATS - BEGIN -->\n".$translationStats."\n<!-- STATS - END -->",
+            file_get_contents($readmePath)
+        );
+
+        $filesystem->dumpFile($readmePath, $moduleReadme);
 
         if ($input->getOption('bump-json')) {
             $moduleJsonPath = sprintf('%s/module.json', $path);
