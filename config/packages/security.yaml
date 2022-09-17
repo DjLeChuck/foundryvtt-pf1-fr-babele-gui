@@ -27,3 +27,4 @@ security:
     access_control:
         - { path: ^/(login|connect), roles: PUBLIC_ACCESS }
         - { path: ^/translate, roles: ROLE_USER }
+        - { path: ^/search, roles: ROLE_USER }
