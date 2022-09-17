@@ -106,6 +106,20 @@ class TermRepository extends ServiceEntityRepository
         return $qb->getQuery();
     }
 
+    public function getGlobalSearchQuery(string $term): Query
+    {
+        $qb = $this->createQueryBuilder('o');
+        $qb
+            ->addSelect('t')
+            ->leftJoin('o.translation', 't')
+            ->where($qb->expr()->orX('LOWER(o.name) LIKE :filter', 'LOWER(t.name) LIKE :filter'))
+            ->orderBy('o.name')
+            ->setParameter('filter', mb_strtolower('%'.$term.'%'))
+        ;
+
+        return $qb->getQuery();
+    }
+
     public function findPacks(): array
     {
         $qb = $this->createQueryBuilder('o');
