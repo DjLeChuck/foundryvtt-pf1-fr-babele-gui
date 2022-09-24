@@ -26,8 +26,9 @@ class GlobalSearchType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'csrf_protection' => false,
-            'method'          => 'get',
+            'csrf_protection'    => false,
+            'method'             => 'get',
+            'allow_extra_fields' => true,
         ]);
     }
 
