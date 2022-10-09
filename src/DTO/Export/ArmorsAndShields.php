@@ -7,7 +7,7 @@ class ArmorsAndShields
     public string $label = 'Armures et boucliers';
     public array $mapping = [
         'identifiedName' => [
-            'path'      => 'data.identifiedName',
+            'path'      => 'system.identifiedName',
             'converter' => 'name',
         ],
     ];

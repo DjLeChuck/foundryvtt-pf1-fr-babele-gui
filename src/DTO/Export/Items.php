@@ -7,7 +7,7 @@ class Items
     public string $label = 'Équipement';
     public array $mapping = [
         'identifiedName' => [
-            'path'      => 'data.identifiedName',
+            'path'      => 'system.identifiedName',
             'converter' => 'name',
         ],
     ];

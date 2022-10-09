@@ -7,7 +7,7 @@ class WeaponsAndAmmo
     public string $label = 'Armes et munitions';
     public array $mapping = [
         'identifiedName' => [
-            'path'      => 'data.identifiedName',
+            'path'      => 'system.identifiedName',
             'converter' => 'name',
         ],
     ];

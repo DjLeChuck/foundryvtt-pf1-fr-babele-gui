@@ -6,7 +6,7 @@ class Spells
 {
     public string $label = 'Sorts';
     public array $mapping = [
-        'description' => 'data.shortDescription',
+        'description' => 'system.shortDescription',
     ];
     public array $entries;
 

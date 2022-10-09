@@ -7,7 +7,7 @@ class CommonBuffs
     public string $label = 'Buffs communs';
     public array $mapping = [
         'identifiedName' => [
-            'path'      => 'data.identifiedName',
+            'path'      => 'system.identifiedName',
             'converter' => 'name',
         ],
     ];
