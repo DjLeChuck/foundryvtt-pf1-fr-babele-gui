@@ -21,6 +21,11 @@ doctrine:
                 prefix: Gedmo\Loggable\Entity
                 dir: '%kernel.project_dir%/vendor/gedmo/doctrine-extensions/src/Loggable/Entity'
 
+when@dev:
+    doctrine:
+        dbal:
+            schema_filter: ~^(?!bestiary)~
+
 when@test:
     doctrine:
         dbal:
