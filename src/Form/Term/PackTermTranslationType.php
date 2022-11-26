@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace App\Form\Term;
 
-use App\Entity\TermTranslation;
+use App\Entity\TermTranslationInterface;
+use App\EventSubscriber\FormSubscriber\AddSpecificTranslationFieldsSubscriber;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -14,6 +15,13 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class PackTermTranslationType extends AbstractType
 {
+    private AddSpecificTranslationFieldsSubscriber $addFieldsSubscriber;
+
+    public function __construct(AddSpecificTranslationFieldsSubscriber $addFieldsSubscriber)
+    {
+        $this->addFieldsSubscriber = $addFieldsSubscriber;
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
@@ -24,8 +32,9 @@ class PackTermTranslationType extends AbstractType
             ])
             ->add('description', TextareaType::class, [
                 'required' => false,
-                'label'    => false,
+                'label'    => 'Description',
             ])
+            ->addEventSubscriber($this->addFieldsSubscriber)
         ;
     }
 
@@ -33,7 +42,7 @@ class PackTermTranslationType extends AbstractType
     {
         $resolver->setDefaults([
             'translation_domain' => false,
-            'data_class'         => TermTranslation::class,
+            'data_class'         => TermTranslationInterface::class,
         ]);
     }
 }

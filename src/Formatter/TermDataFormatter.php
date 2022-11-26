@@ -2,7 +2,7 @@
 
 namespace App\Formatter;
 
-use App\DTO\Term;
+use App\Entity\TermInterface;
 
 class TermDataFormatter
 {
@@ -14,11 +14,11 @@ class TermDataFormatter
         $this->formatters = $formatters;
     }
 
-    public function format(string $pack, array $data): Term
+    public function format(string $pack, array $data): TermInterface
     {
         foreach ($this->formatters as $formatter) {
             if ($formatter->supports($pack)) {
-                return $formatter->format($data);
+                return $formatter->format($pack, $data);
             }
         }
 

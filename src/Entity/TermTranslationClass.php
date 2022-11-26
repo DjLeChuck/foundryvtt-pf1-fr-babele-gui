@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Table(name: 'app_term_translation_class')]
 class TermTranslationClass extends TermTranslation
 {
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $customWeaponProf = null;
 
     public function getCustomWeaponProf(): ?string

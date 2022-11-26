@@ -11,7 +11,7 @@
         {% endif %}
         <th scope="col">Nom VO</th>
         <th scope="col">Nom VF</th>
-        <th scope="col">Description</th>
+        <th scope="col">Autres données</th>
       </tr>
     </thead>
     <tbody>
@@ -46,12 +46,10 @@
             </div>
           </td>
           <td>
-            {% if term_entry.translation.description is defined %}
-              <button type="button" class="btn" {{ stimulus_action('table-multirow', 'toggle', 'click') }}
-                      data-term="{{ term.id }}">
-                <img src="{{ asset('eye-open.svg', 'svg') }}" alt="" />
-              </button>
-            {% endif %}
+            <button type="button" class="btn" {{ stimulus_action('table-multirow', 'toggle', 'click') }}
+                    data-term="{{ term.id }}">
+              <img src="{{ asset('eye-open.svg', 'svg') }}" alt="" />
+            </button>
 
             {% if term.translationLevel < 2 and is_granted('approve', term) %}
               <a href="{{ path('app_translate_approve', { id: term.id }) }}" class="btn">
@@ -60,36 +58,33 @@
             {% endif %}
           </td>
         </tr>
-        {% if term_entry.translation.description is defined %}
-          <tr data-term="{{ term.id }}" class="d-none" {{ stimulus_target('table-multirow', 'hiddenRow') }}
-              {{ stimulus_controller('translate', { url: path('app_translate_do_translation') }) }}>
-            <td colspan="{{ display_pack ? 4 : 3 }}">
-              <div class="row">
-                <div class="col-6" {{ stimulus_target('translate', 'input') }}>{{ term.description|raw }}</div>
-                <div class="col-6">
-                  <div {{ stimulus_controller('ckeditor') }} {{ stimulus_action('ckeditor', 'update', 'translate:translated@window') }}>
-                    {% if term.descriptionSeemsUntranslated %}
-                      <button type="button" class="btn" {{ stimulus_action('translate', 'do') }}>
-                        <span class="spinner-border spinner-border-sm visually-hidden" role="status"
-                              aria-hidden="true" {{ stimulus_target('translate', 'spinner') }}></span>
-                        <img src="{{ asset('build/images/svg/translate.svg') }}" alt="Traduire" width="24"
-                            {{ stimulus_target('translate', 'img') }}/>
-                        Traduire automatiquement depuis l'anglais
-                      </button>
-                    {% endif %}
-
-                    <div {{ stimulus_target('ckeditor', 'editor') }}></div>
-                    {{ form_widget(term_entry.translation.description, { attr: {
-                      class: 'd-none',
-                      'data-ckeditor-target': 'content',
-                      'data-translate-target': 'output',
-                    } }) }}
-                  </div>
+        <tr data-term="{{ term.id }}" class="d-none" {{ stimulus_target('table-multirow', 'hiddenRow') }}
+            {{ stimulus_controller('translate', { url: path('app_translate_do_translation') }) }}>
+          <td colspan="{{ display_pack ? 4 : 3 }}" {{ stimulus_controller('tab') }}>
+            <ul class="nav nav-pills mb-3" role="tablist">
+              {% for field in term_entry.translation|filter(f => not f.rendered) %}
+                <li class="nav-item" role="presentation">
+                  <button class="nav-link{{ loop.first ? ' active' }}" data-bs-toggle="tab"
+                          data-bs-target="#tab-{{ field.vars.id }}"
+                          type="button" role="tab" {{ stimulus_target('tab', 'target') }}>
+                    {{ field.vars.label }}
+                  </button>
+                </li>
+              {% endfor %}
+            </ul>
+            <div class="tab-content">
+              {% for field in term_entry.translation|filter(f => not f.rendered) %}
+                <div class="tab-pane fade show{{ loop.first ? ' active' }}" id="tab-{{ field.vars.id }}"
+                     role="tabpanel">
+                  {{ include([
+                    'translate/fields/_' ~ field.vars.name ~ '.html.twig',
+                    'translate/fields/_default.html.twig'
+                  ]) }}
                 </div>
-              </div>
-            </td>
-          </tr>
-        {% endif %}
+              {% endfor %}
+            </div>
+          </td>
+        </tr>
       {% endfor %}
     </tbody>
   </table>
