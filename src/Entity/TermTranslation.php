@@ -12,30 +12,33 @@ use Gedmo\Mapping\Annotation as Gedmo;
 #[ORM\Index(columns: ['name'], name: 'term_translation_name_idx')]
 #[ORM\HasLifecycleCallbacks]
 #[Gedmo\Loggable]
-class TermTranslation
+#[ORM\InheritanceType('JOINED')]
+#[ORM\DiscriminatorColumn(name: 'discr', type: 'string')]
+#[ORM\DiscriminatorMap(['classes' => TermTranslationClass::class])]
+class TermTranslation implements TermTranslationInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    private ?int $id = null;
+    protected ?int $id = null;
 
     #[ORM\Column(length: 255)]
     #[Gedmo\Versioned]
-    private ?string $name = null;
+    protected ?string $name = null;
 
     #[ORM\Column(type: Types::TEXT)]
     #[Gedmo\Versioned]
-    private ?string $description = null;
+    protected ?string $description = null;
 
     #[ORM\OneToOne(mappedBy: 'translation', cascade: ['persist', 'remove'])]
-    private ?Term $term = null;
+    protected ?Term $term = null;
 
     #[ORM\Column(type: Types::STRING, nullable: true)]
     #[Gedmo\Blameable(on: 'update')]
-    private string $updatedBy;
+    protected string $updatedBy;
 
     #[ORM\Column(type: Types::BOOLEAN, options: ['default' => false])]
-    private bool $approved = false;
+    protected bool $approved = false;
 
     public function getId(): ?int
     {

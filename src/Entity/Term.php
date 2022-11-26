@@ -9,24 +9,27 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Table(name: 'app_term')]
 #[ORM\Index(columns: ['name'], name: 'term_name_idx')]
 #[ORM\Index(columns: ['pack'], name: 'term_pack_idx')]
-class Term
+#[ORM\InheritanceType('JOINED')]
+#[ORM\DiscriminatorColumn(name: 'discr', type: 'string')]
+#[ORM\DiscriminatorMap(['classes' => TermClass::class])]
+class Term implements TermInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    private ?int $id = null;
+    protected ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $name = null;
+    protected ?string $name = null;
 
     #[ORM\Column(type: Types::TEXT)]
-    private ?string $description = null;
+    protected ?string $description = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $pack = null;
+    protected ?string $pack = null;
 
     #[ORM\OneToOne(inversedBy: 'term', cascade: ['persist', 'remove'])]
-    private ?TermTranslation $translation = null;
+    protected ?TermTranslation $translation = null;
 
     public function getId(): ?int
     {
