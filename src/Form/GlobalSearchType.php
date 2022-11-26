@@ -28,7 +28,7 @@ class GlobalSearchType extends AbstractType
         $resolver->setDefaults([
             'csrf_protection'    => false,
             'method'             => 'get',
-            'allow_extra_fields' => true,
+            'translation_domain' => false,
         ]);
     }
 

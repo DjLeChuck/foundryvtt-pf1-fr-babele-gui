@@ -2,7 +2,8 @@
 
 namespace App\Controller\Translate;
 
-use App\Manager\TranslationManager;
+use App\Form\Term\ListType;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -11,26 +12,23 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/translate', name: 'app_translate_pack_process', methods: 'POST')]
 class ProcessPackTranslationAction extends AbstractController
 {
-    public function __invoke(Request $request, TranslationManager $translationManager): Response
+    public function __invoke(Request $request, EntityManagerInterface $entityManager): Response
     {
-        if (!$this->isCsrfTokenValid('translate', $request->request->get('_csrf_token'))) {
-            throw $this->createAccessDeniedException();
-        }
+        $form = $this->createForm(ListType::class);
 
-        $translations = $request->request->all('translation');
-        if (!empty($translations)) {
-            foreach ($translations as $termId => $data) {
-                $translationManager->updateTranslation($termId, $data);
-            }
+        $form->handleRequest($request);
 
-            $translationManager->flush();
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->flush();
 
             $this->addFlash('success', 'Traductions enregistrées.');
         }
 
-        return $this->redirect($request->headers->get(
-            'referer',
-            $request->request->get('_redirect', $this->generateUrl('app_home'))
-        ));
+        return $this->redirect(
+            $request->headers->get(
+                'referer',
+                $request->request->get('_redirect', $this->generateUrl('app_home'))
+            )
+        );
     }
 }

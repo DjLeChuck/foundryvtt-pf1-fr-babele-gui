@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Form\GlobalSearchType;
+use App\Form\Term\ListType;
 use App\Repository\TermRepository;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -16,6 +17,7 @@ class SearchAction extends AbstractController
     public function __invoke(Request $request, TermRepository $termRepository, PaginatorInterface $paginator): Response
     {
         $form = $this->createForm(GlobalSearchType::class);
+        $translationForm = null;
         $term = null;
         $pagination = null;
 
@@ -36,11 +38,13 @@ class SearchAction extends AbstractController
                 $request->query->getInt('page', 1),
                 20
             );
+            $translationForm = $this->createForm(ListType::class, ['terms' => $pagination]);
         }
 
-        return $this->render('search.html.twig', [
-            'term'       => $term,
-            'pagination' => $pagination,
+        return $this->renderForm('search.html.twig', [
+            'translation_form' => $translationForm,
+            'term'             => $term,
+            'pagination'       => $pagination,
         ]);
     }
 }

@@ -13,18 +13,18 @@
 {% block body %}
   <h1 class="mt-3">Traduction du pack <strong>{{ pack }}</strong></h1>
 
-  {{ form_start(form) }}
+  {{ form_start(filter_form) }}
   <div class="input-group mb-3">
-    {{ form_widget(form.term) }}
+    {{ form_widget(filter_form.term) }}
 
     <div class="input-group-text">
-      {{ form_widget(form.only_untranslated) }}
-      {{ form_label(form.only_untranslated) }}
+      {{ form_widget(filter_form.only_untranslated) }}
+      {{ form_label(filter_form.only_untranslated) }}
     </div>
 
     <button class="btn btn-primary" type="submit">Filtrer</button>
   </div>
-  {{ form_end(form) }}
+  {{ form_end(filter_form) }}
 
   {{ include('translate/_terms-table.html.twig', {
     display_pack: false,

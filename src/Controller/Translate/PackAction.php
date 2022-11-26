@@ -4,7 +4,7 @@ namespace App\Controller\Translate;
 
 use App\DTO\FilterPack;
 use App\Form\FilterPackType;
-use App\Manager\TranslationManager;
+use App\Form\Term\ListType;
 use App\Repository\TermRepository;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -19,24 +19,27 @@ class PackAction extends AbstractController
         Request $request,
         string $pack,
         TermRepository $termRepository,
-        TranslationManager $translationManager,
         PaginatorInterface $paginator
     ): Response {
         $filterPack = new FilterPack($pack);
-        $form = $this->createForm(FilterPackType::class, $filterPack);
+        $filterForm = $this->createForm(FilterPackType::class, $filterPack);
 
-        $form->handleRequest($request);
+        $filterForm->handleRequest($request);
 
-        $form->isSubmitted() && $form->isValid();
+        $filterForm->isSubmitted() && $filterForm->isValid();
+
+        $pagination = $paginator->paginate(
+            $termRepository->getByPackQuery($filterPack),
+            $request->query->getInt('page', 1),
+            20
+        );
+        $translationForm = $this->createForm(ListType::class, ['terms' => $pagination]);
 
         return $this->renderForm('translate/pack.html.twig', [
-            'form'       => $form,
-            'pack'       => $pack,
-            'pagination' => $paginator->paginate(
-                $termRepository->getByPackQuery($filterPack),
-                $request->query->getInt('page', 1),
-                20
-            ),
+            'filter_form'      => $filterForm,
+            'translation_form' => $translationForm,
+            'pack'             => $pack,
+            'pagination'       => $pagination,
         ]);
     }
 }

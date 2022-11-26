@@ -1,28 +1,30 @@
 <?php
 
-namespace App\Form;
+declare(strict_types=1);
 
+namespace App\Form\Term;
+
+use App\Entity\TermTranslation;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class FilterPackType extends AbstractType
+class PackTermTranslationType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('term', TextType::class, [
+            ->add('id', HiddenType::class)
+            ->add('name', TextType::class, [
                 'required' => false,
                 'label'    => false,
-                'attr'     => [
-                    'placeholder' => 'Nom VO, Nom VF',
-                ],
             ])
-            ->add('only_untranslated', CheckboxType::class, [
+            ->add('description', TextareaType::class, [
                 'required' => false,
-                'label'    => 'Seulement les termes non traduits',
+                'label'    => false,
             ])
         ;
     }
@@ -31,7 +33,7 @@ class FilterPackType extends AbstractType
     {
         $resolver->setDefaults([
             'translation_domain' => false,
-            'method'             => 'GET',
+            'data_class'         => TermTranslation::class,
         ]);
     }
 }

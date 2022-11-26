@@ -1,58 +1,66 @@
-<form action="{{ path('app_translate_pack_process') }}" method="post">
-  <div class="table-responsive">
-    <table class="table table-striped" {{ stimulus_controller('table-multirow', {
-      open: asset('eye-open.svg', 'svg'),
-      close: asset('eye-close.svg', 'svg'),
-    }) }}>
-      <thead>
+{{ form_start(translation_form) }}
+<div class="table-responsive">
+  <table class="table table-striped" {{ stimulus_controller('table-multirow', {
+    open: asset('eye-open.svg', 'svg'),
+    close: asset('eye-close.svg', 'svg'),
+  }) }}>
+    <thead>
+      <tr>
+        {% if display_pack %}
+          <th scope="col">Pack</th>
+        {% endif %}
+        <th scope="col">Nom VO</th>
+        <th scope="col">Nom VF</th>
+        <th scope="col">Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      {# @var term \App\Entity\Term #}
+      {% for term_entry in translation_form.terms %}
+        {% set term = term_entry.vars.value %}
+        {% set translation_level = term.translationLevel %}
         <tr>
           {% if display_pack %}
-            <th scope="col">Pack</th>
+            <td>{{ term.pack }}</td>
           {% endif %}
-          <th scope="col">Nom VO</th>
-          <th scope="col">Nom VF</th>
-          <th scope="col">Description</th>
-        </tr>
-      </thead>
-      <tbody>
-        {# @var term \App\Entity\Term #}
-        {% for term in pagination %}
-          {% set translation_level = term.translationLevel %}
-          <tr>
-            {% if display_pack %}
-              <td>{{ term.pack }}</td>
-            {% endif %}
-            <td>{{ term.name }}</td>
-            <td>
-              <div class="form-group">
-                {% if translation_level < 2 %}
-                <div class="input-group">
-                  {% endif %}
-                  <input type="text" class="form-control" placeholder="{{ term.name }}"
-                         name="translation[{{ term.id }}][name]" value="{{ term.translation.name ?? '' }}" />
-                  {% if translation_level < 2 %}
-                  <span class="input-group-text {{ translation_level == 1 ? 'bg-warning' : 'bg-danger' }}">
-                    <img src="{{ asset('alert.svg', 'svg') }}" alt="Attention" />
-                  </span>
-                </div>
-                {% endif %}
-              </div>
-            </td>
-            <td>
-              {% if term.description|length %}
-                <button type="button" class="btn" {{ stimulus_action('table-multirow', 'toggle', 'click') }}
-                        data-term="{{ term.id }}">
-                  <img src="{{ asset('eye-open.svg', 'svg') }}" alt="" />
-                </button>
-              {% endif %}
+          <td>{{ term.name }}</td>
+          <td>
+            <div class="form-group">
+              {{ form_widget(term_entry.id) }}
+              {{ form_widget(term_entry.translation.id) }}
 
-              {% if term.translationLevel < 2 and is_granted('approve', term) %}
-                <a href="{{ path('app_translate_approve', { id: term.id }) }}" class="btn">
-                  <img src="{{ asset('check2-circle.svg', 'svg') }}" alt="" width="24" />
-                </a>
+              {% if translation_level < 2 %}
+              <div class="input-group">
+                {% endif %}
+
+                {{ form_widget(term_entry.translation.name, { attr: {
+                  placeholder: term.name,
+                } }) }}
+
+                {% if translation_level < 2 %}
+                <span class="input-group-text {{ translation_level == 1 ? 'bg-warning' : 'bg-danger' }}">
+                  <img src="{{ asset('alert.svg', 'svg') }}" alt="Attention" />
+                </span>
+              </div>
               {% endif %}
-            </td>
-          </tr>
+            </div>
+          </td>
+          <td>
+            {% if term_entry.translation.description is defined %}
+              <button type="button" class="btn" {{ stimulus_action('table-multirow', 'toggle', 'click') }}
+                      data-term="{{ term.id }}">
+                <img src="{{ asset('eye-open.svg', 'svg') }}" alt="" />
+              </button>
+            {% endif %}
+
+            {% if term.translationLevel < 2 and is_granted('approve', term) %}
+              <a href="{{ path('app_translate_approve', { id: term.id }) }}" class="btn">
+                <img src="{{ asset('check2-circle.svg', 'svg') }}" alt="" width="24" />
+              </a>
+            {% endif %}
+          </td>
+        </tr>
+        {% if term_entry.translation.description is defined %}
           <tr data-term="{{ term.id }}" class="d-none" {{ stimulus_target('table-multirow', 'hiddenRow') }}
               {{ stimulus_controller('translate', { url: path('app_translate_do_translation') }) }}>
             <td colspan="{{ display_pack ? 4 : 3 }}">
@@ -62,38 +70,39 @@
                   <div {{ stimulus_controller('ckeditor') }} {{ stimulus_action('ckeditor', 'update', 'translate:translated@window') }}>
                     {% if term.descriptionSeemsUntranslated %}
                       <button type="button" class="btn" {{ stimulus_action('translate', 'do') }}>
-                        <span class="spinner-border spinner-border-sm visually-hidden" role="status" aria-hidden="true"
-                            {{ stimulus_target('translate', 'spinner') }}></span>
+                        <span class="spinner-border spinner-border-sm visually-hidden" role="status"
+                              aria-hidden="true" {{ stimulus_target('translate', 'spinner') }}></span>
                         <img src="{{ asset('build/images/svg/translate.svg') }}" alt="Traduire" width="24"
                             {{ stimulus_target('translate', 'img') }}/>
                         Traduire automatiquement depuis l'anglais
                       </button>
                     {% endif %}
-                    {% if term.description|length %}
-                      <div {{ stimulus_target('ckeditor', 'editor') }}></div>
-                      <textarea name="translation[{{ term.id }}][description]" class="d-none"
-                          {{ stimulus_target('ckeditor', 'content') }}
-                          {{ stimulus_target('translate', 'output') }}>{{ term.translation.description|raw }}</textarea>
-                    {% endif %}
+
+                    <div {{ stimulus_target('ckeditor', 'editor') }}></div>
+                    {{ form_widget(term_entry.translation.description, { attr: {
+                      class: 'd-none',
+                      'data-ckeditor-target': 'content',
+                      'data-translate-target': 'output',
+                    } }) }}
                   </div>
                 </div>
               </div>
             </td>
           </tr>
-        {% endfor %}
-      </tbody>
-    </table>
-  </div>
+        {% endif %}
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
 
-  <div class="row mt-2">
-    <div class="col-10">
-      {{ knp_pagination_render(pagination) }}
-    </div>
-    <div class="col-2">
-      <button type="submit" class="btn btn-primary float-end">Enregistrer</button>
-    </div>
+<div class="row mt-2">
+  <div class="col-10">
+    {{ knp_pagination_render(pagination) }}
   </div>
+  <div class="col-2">
+    <button type="submit" class="btn btn-primary float-end">Enregistrer</button>
+  </div>
+</div>
 
-  <input type="hidden" name="_csrf_token" value="{{ csrf_token('translate') }}" />
-  <input type="hidden" name="_redirect" value="{{ redirect }}" />
-</form>
+<input type="hidden" name="_redirect" value="{{ redirect }}" />
+{{ form_end(translation_form) }}

@@ -81,6 +81,24 @@ class TermRepository extends ServiceEntityRepository
         return $qb->getQuery()->getOneOrNullResult();
     }
 
+    /**
+     * @param array $ids
+     *
+     * @return Term[]
+     */
+    public function findMultipleWithTranslation(array $ids): array
+    {
+        $qb = $this->createQueryBuilder('o');
+        $qb
+            ->select('o, t')
+            ->leftJoin('o.translation', 't')
+            ->where('o IN (:ids)')
+            ->setParameter('ids', $ids)
+        ;
+
+        return $qb->getQuery()->getResult();
+    }
+
     public function getByPackQuery(FilterPack $filter): Query
     {
         $qb = $this->createQueryBuilder('o');
