@@ -11,7 +11,10 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Index(columns: ['pack'], name: 'term_pack_idx')]
 #[ORM\InheritanceType('JOINED')]
 #[ORM\DiscriminatorColumn(name: 'discr', type: 'string')]
-#[ORM\DiscriminatorMap(['classes' => TermClass::class])]
+#[ORM\DiscriminatorMap([
+    'classes' => TermClass::class,
+    'items'   => TermItem::class,
+])]
 class Term implements TermInterface
 {
     #[ORM\Id]

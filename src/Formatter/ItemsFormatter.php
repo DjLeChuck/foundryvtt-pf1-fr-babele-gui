@@ -2,20 +2,20 @@
 
 namespace App\Formatter;
 
-use App\Entity\TermClass;
 use App\Entity\TermInterface;
-use App\Repository\TermClassRepository;
+use App\Entity\TermItem;
+use App\Repository\TermItemRepository;
 
-class ClassesFormatter implements TermFormatterInterface
+class ItemsFormatter implements TermFormatterInterface
 {
-    private const SUPPORTED_PACKS = ['classes'];
+    private const SUPPORTED_PACKS = ['items'];
 
-    private TermClassRepository $repository;
+    private TermItemRepository $repository;
 
-    /** @var TermClass[]|null */
+    /** @var TermItem[]|null */
     private static ?array $existing = null;
 
-    public function __construct(TermClassRepository $repository)
+    public function __construct(TermItemRepository $repository)
     {
         $this->repository = $repository;
     }
@@ -30,12 +30,13 @@ class ClassesFormatter implements TermFormatterInterface
         $term = $this->getEntity($pack, $dataset);
 
         $term->setDescription($dataset['data']['description']['value'] ?? '');
-        $term->setCustomWeaponProf($dataset['data']['weaponProf']['custom'] ?? '');
+        $term->setUnidentifiedName($dataset['data']['unidentified']['name'] ?? '');
+        $term->setUnidentifiedDescription($dataset['data']['description']['unidentified'] ?? '');
 
         return $term;
     }
 
-    private function getEntity(string $pack, array $dataset): TermClass
+    private function getEntity(string $pack, array $dataset): TermItem
     {
         $this->warmup();
 
@@ -45,7 +46,7 @@ class ClassesFormatter implements TermFormatterInterface
             }
         }
 
-        $term = new TermClass();
+        $term = new TermItem();
         $term->setPack($pack);
         $term->setName($dataset['name']);
 

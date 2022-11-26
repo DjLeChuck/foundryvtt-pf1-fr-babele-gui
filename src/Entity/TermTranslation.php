@@ -14,7 +14,10 @@ use Gedmo\Mapping\Annotation as Gedmo;
 #[Gedmo\Loggable]
 #[ORM\InheritanceType('JOINED')]
 #[ORM\DiscriminatorColumn(name: 'discr', type: 'string')]
-#[ORM\DiscriminatorMap(['classes' => TermTranslationClass::class])]
+#[ORM\DiscriminatorMap([
+    'classes' => TermTranslationClass::class,
+    'items'   => TermTranslationItem::class,
+])]
 class TermTranslation implements TermTranslationInterface
 {
     #[ORM\Id]

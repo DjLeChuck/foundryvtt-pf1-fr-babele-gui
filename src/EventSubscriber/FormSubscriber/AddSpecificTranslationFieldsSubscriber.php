@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace App\EventSubscriber\FormSubscriber;
 
 use App\Entity\TermTranslationClass;
+use App\Entity\TermTranslationItem;
 use App\Form\Term\TranslationsType\ClassType;
+use App\Form\Term\TranslationsType\ItemType;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\Event\PreSetDataEvent;
 use Symfony\Component\Form\FormEvents;
@@ -32,6 +34,7 @@ class AddSpecificTranslationFieldsSubscriber implements EventSubscriberInterface
     {
         $formType = match ($event->getData()::class) {
             TermTranslationClass::class => ClassType::class,
+            TermTranslationItem::class => ItemType::class,
             default => null,
         };
 
