@@ -46,7 +46,7 @@ class ImportPacksCommand extends Command
 
         $finder = new Finder();
 
-        foreach ($finder->in($path)->files()->sortByName()->name('*.db') as $file) {
+        foreach ($finder->in($path)->files()->depth(0)->sortByName()->name('*.db') as $file) {
             $io->info(sprintf('Import du fichier %s', $file->getFilename()));
 
             $this->importer->import($file, $io);
