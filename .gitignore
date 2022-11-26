@@ -1,4 +1,4 @@
-docker-compose.override.yml
+docker-compose.yml
 composer.phar
 
 ###> symfony/framework-bundle ###
