@@ -14,6 +14,7 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\DiscriminatorMap([
     'classes' => TermClass::class,
     'items'   => TermItem::class,
+    'races'   => TermRace::class,
 ])]
 class Term implements TermInterface
 {

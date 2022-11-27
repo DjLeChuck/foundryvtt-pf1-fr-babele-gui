@@ -4,10 +4,7 @@ declare(strict_types=1);
 
 namespace App\EventSubscriber\FormSubscriber;
 
-use App\Entity\TermTranslationClass;
-use App\Entity\TermTranslationItem;
-use App\Form\Term\TranslationsType\ClassType;
-use App\Form\Term\TranslationsType\ItemType;
+use App\Entity\TermTranslation;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\Event\PreSetDataEvent;
 use Symfony\Component\Form\FormEvents;
@@ -32,25 +29,36 @@ class AddSpecificTranslationFieldsSubscriber implements EventSubscriberInterface
 
     public function onPreSetData(PreSetDataEvent $event): void
     {
-        $formType = match ($event->getData()::class) {
-            TermTranslationClass::class => ClassType::class,
-            TermTranslationItem::class => ItemType::class,
-            default => null,
-        };
+        $entityClass = $event->getData()::class;
+        $formType = sprintf(
+            'App\Form\Term\TranslationsType\%sType',
+            str_replace(TermTranslation::class, '', $entityClass)
+        );
 
-        if (null === $formType) {
-            return;
+        if (!class_exists($formType)) {
+            throw new \InvalidArgumentException(
+                sprintf('Le FormType %s spécifique à %s n\'existe pas', $formType, $entityClass)
+            );
         }
 
         $form = $event->getForm();
+        $builder = $this->formFactory->createBuilder();
 
         /** @var FormInterface $specificForm */
         foreach ($this->formFactory->create($formType) as $specificForm) {
-            $form->add(
+            $modelTransformers = $specificForm->getConfig()->getModelTransformers();
+
+            $field = $builder->create(
                 $specificForm->getName(),
                 $specificForm->getConfig()->getType()->getInnerType()::class,
-                $specificForm->getConfig()->getOptions()
+                array_merge($specificForm->getConfig()->getOptions(), ['auto_initialize' => false])
             );
+
+            foreach ($modelTransformers as $transformer) {
+                $field->addModelTransformer($transformer);
+            }
+
+            $form->add($field->getForm());
         }
     }
 }
