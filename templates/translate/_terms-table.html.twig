@@ -23,7 +23,13 @@
           {% if display_pack %}
             <td>{{ term.pack }}</td>
           {% endif %}
-          <td>{{ term.name }}</td>
+          <td>
+            {{ term.name }}
+            {% if term.packId is not null %}
+              <br />
+              <small class="text-muted">(ID : {{ term.packId }})</small>
+            {% endif %}
+          </td>
           <td>
             <div class="form-group">
               {{ form_widget(term_entry.id) }}
