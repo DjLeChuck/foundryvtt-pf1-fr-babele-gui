@@ -123,7 +123,8 @@ class TermRepository extends ServiceEntityRepository
 
         if (null !== $filter->getTerm()) {
             $qb
-                ->andWhere($qb->expr()->orX('LOWER(o.name) LIKE :filter', 'LOWER(t.name) LIKE :filter'))
+                ->andWhere($qb->expr()->orX('o.packId = :filterId', 'LOWER(o.name) LIKE :filter', 'LOWER(t.name) LIKE :filter'))
+                ->setParameter('filterId', mb_strtolower($filter->getTerm()))
                 ->setParameter('filter', mb_strtolower('%'.$filter->getTerm().'%'))
             ;
         }
