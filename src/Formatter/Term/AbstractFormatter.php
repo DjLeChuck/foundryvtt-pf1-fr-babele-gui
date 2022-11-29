@@ -7,14 +7,14 @@ namespace App\Formatter\Term;
 use App\Entity\TermClass;
 use App\Entity\TermInterface;
 use App\Formatter\TermFormatterInterface;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use App\Repository\TermRepositoryInterface;
 
 abstract class AbstractFormatter implements TermFormatterInterface
 {
     /** @var TermClass[]|null */
-    protected static ?array $existing = null;
+    protected ?array $existing = null;
 
-    protected ServiceEntityRepository $repository;
+    protected TermRepositoryInterface $repository;
 
     abstract protected function getEntityClass(): string;
 
@@ -22,8 +22,10 @@ abstract class AbstractFormatter implements TermFormatterInterface
     {
         $this->warmup();
 
-        foreach (static::$existing as $existing) {
-            if ($existing->getName() === $dataset['name']) {
+        foreach ($this->existing as $existing) {
+            if ($existing->getPackId() === $dataset['_id'] || $existing->getName() === $dataset['name']) {
+                $this->setPackId($existing, $dataset);
+
                 return $existing;
             }
         }
@@ -33,13 +35,24 @@ abstract class AbstractFormatter implements TermFormatterInterface
         $term->setPack($pack);
         $term->setName($dataset['name']);
 
+        $this->setPackId($term, $dataset);
+
         return $term;
     }
 
     protected function warmup(): void
     {
-        if (null === static::$existing) {
-            static::$existing = $this->repository->findAll();
+        if (null === $this->existing) {
+            $this->existing = $this->repository->findAllWithTranslations();
         }
+    }
+
+    private function setPackId(TermInterface $term, array $dataset): void
+    {
+        if (!isset($dataset['_id'])) {
+            return;
+        }
+
+        $term->setPackId($dataset['_id']);
     }
 }

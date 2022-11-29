@@ -43,6 +43,17 @@ class TermRepository extends ServiceEntityRepository
         }
     }
 
+    public function findAllWithTranslations(): array
+    {
+        $qb = $this->createQueryBuilder('o');
+        $qb
+            ->addSelect('t')
+            ->leftJoin('o.translation', 't')
+        ;
+
+        return $qb->getQuery()->getResult();
+    }
+
     public function findPartialByPack(string $pack): array
     {
         $qb = $this->createQueryBuilder('o');
@@ -118,7 +129,9 @@ class TermRepository extends ServiceEntityRepository
         }
 
         if ($filter->onlyUntranslated()) {
-            $qb->andWhere('(o.name = t.name OR (o.description != \'\' AND t.description = \'\')) AND t.approved = FALSE');
+            $qb->andWhere(
+                '(o.name = t.name OR (o.description != \'\' AND t.description = \'\')) AND t.approved = FALSE'
+            );
         }
 
         return $qb->getQuery();
@@ -155,7 +168,8 @@ class TermRepository extends ServiceEntityRepository
         $qb = $this->createQueryBuilder('o');
         $qb
             ->select(
-                'o.pack', 'COUNT(o.id) AS total',
+                'o.pack',
+                'COUNT(o.id) AS total',
                 'SUM(CASE WHEN (o.name = t.name AND t.approved = FALSE) OR t.id IS NULL THEN 1 ELSE 0 END) untranslated',
                 'SUM(CASE WHEN o.name != t.name OR t.approved = TRUE THEN 1 ELSE 0 END) translated'
             )
@@ -185,7 +199,9 @@ class TermRepository extends ServiceEntityRepository
     {
         $qb = $this->createQueryBuilder('o', 'o.name');
         $qb
-            ->select('o.name term, coalesce(t.name, o.name) as name, coalesce(t.description, o.description) as description')
+            ->select(
+                'o.name term, coalesce(t.name, o.name) as name, coalesce(t.description, o.description) as description'
+            )
             ->leftJoin('o.translation', 't')
             ->where('o.pack = :pack')
             ->orderBy('o.name')
@@ -199,7 +215,8 @@ class TermRepository extends ServiceEntityRepository
     {
         return $this->_em
             ->getConnection()
-            ->executeQuery(<<<SQL
+            ->executeQuery(
+                <<<SQL
 SELECT a.id term_id, b.name_fr
 FROM app_term a
 INNER JOIN bestiary b ON a.name = b.name_en

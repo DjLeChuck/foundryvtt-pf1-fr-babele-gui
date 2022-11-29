@@ -23,6 +23,9 @@ class Term implements TermInterface
     #[ORM\Column]
     protected ?int $id = null;
 
+    #[ORM\Column(length: 255, unique: true, nullable: true)]
+    protected ?string $packId = null;
+
     #[ORM\Column(length: 255)]
     protected ?string $name = null;
 
@@ -43,6 +46,16 @@ class Term implements TermInterface
     public function setId(?int $id): void
     {
         $this->id = $id;
+    }
+
+    public function getPackId(): ?string
+    {
+        return $this->packId;
+    }
+
+    public function setPackId(?string $packId): void
+    {
+        $this->packId = $packId;
     }
 
     public function getName(): ?string

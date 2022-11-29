@@ -10,6 +10,10 @@ interface TermInterface
 
     public function setId(?int $id): void;
 
+    public function getPackId(): ?string;
+
+    public function setPackId(?string $packId): void;
+
     public function getName(): ?string;
 
     public function setName(string $name): void;
