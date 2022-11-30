@@ -17,6 +17,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 #[ORM\DiscriminatorMap([
     'classes'     => TermTranslationClass::class,
     'commonbuffs' => TermTranslationCommonBuff::class,
+    'feats'       => TermTranslationFeat::class,
     'items'       => TermTranslationItem::class,
     'races'       => TermTranslationRace::class,
     'spells'      => TermTranslationSpell::class,

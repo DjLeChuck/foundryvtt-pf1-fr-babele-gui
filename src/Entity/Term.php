@@ -14,6 +14,7 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\DiscriminatorMap([
     'classes'     => TermClass::class,
     'commonbuffs' => TermCommonBuff::class,
+    'feats'       => TermFeat::class,
     'items'       => TermItem::class,
     'races'       => TermRace::class,
     'spells'      => TermSpell::class,
