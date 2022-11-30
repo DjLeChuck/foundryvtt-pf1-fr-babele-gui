@@ -12,10 +12,11 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\InheritanceType('JOINED')]
 #[ORM\DiscriminatorColumn(name: 'discr', type: 'string')]
 #[ORM\DiscriminatorMap([
-    'classes' => TermClass::class,
-    'items'   => TermItem::class,
-    'races'   => TermRace::class,
-    'spells'  => TermSpell::class,
+    'classes'     => TermClass::class,
+    'commonbuffs' => TermCommonBuff::class,
+    'items'       => TermItem::class,
+    'races'       => TermRace::class,
+    'spells'      => TermSpell::class,
 ])]
 class Term implements TermInterface
 {

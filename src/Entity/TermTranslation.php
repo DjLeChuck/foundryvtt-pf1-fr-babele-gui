@@ -15,10 +15,11 @@ use Gedmo\Mapping\Annotation as Gedmo;
 #[ORM\InheritanceType('JOINED')]
 #[ORM\DiscriminatorColumn(name: 'discr', type: 'string')]
 #[ORM\DiscriminatorMap([
-    'classes' => TermTranslationClass::class,
-    'items'   => TermTranslationItem::class,
-    'races'   => TermTranslationRace::class,
-    'spells'  => TermTranslationSpell::class,
+    'classes'     => TermTranslationClass::class,
+    'commonbuffs' => TermTranslationCommonBuff::class,
+    'items'       => TermTranslationItem::class,
+    'races'       => TermTranslationRace::class,
+    'spells'      => TermTranslationSpell::class,
 ])]
 class TermTranslation implements TermTranslationInterface
 {
