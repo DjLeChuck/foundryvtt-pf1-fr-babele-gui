@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Form\Term\TranslationsType;
 
+use App\Form\SimpleTextCollectionType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -14,7 +14,7 @@ class ClassType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('customWeaponProf', TextType::class, [
+            ->add('customWeaponProf', SimpleTextCollectionType::class, [
                 'required' => false,
                 'label'    => 'Maniement des armes (spéciale)',
             ])

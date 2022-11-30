@@ -68,7 +68,7 @@
             {{ stimulus_controller('translate', { url: path('app_translate_do_translation') }) }}>
           <td colspan="{{ display_pack ? 4 : 3 }}" {{ stimulus_controller('tab') }}>
             <ul class="nav nav-pills mb-3" role="tablist">
-              {% for field in term_entry.translation|filter(f => not f.rendered and f.vars.value is not null and f.vars.value != '') %}
+              {% for field in term_entry.translation|filter(f => not f.rendered and f.vars.value is not null and f.vars.value != '' and f.vars.value|length) %}
                 <li class="nav-item" role="presentation">
                   <button class="nav-link{{ loop.first ? ' active' }}" data-bs-toggle="tab"
                           data-bs-target="#tab-{{ field.vars.id }}"
@@ -79,7 +79,7 @@
               {% endfor %}
             </ul>
             <div class="tab-content">
-              {% for field in term_entry.translation|filter(f => not f.rendered and f.vars.value is not null and f.vars.value != '') %}
+              {% for field in term_entry.translation|filter(f => not f.rendered and f.vars.value is not null and f.vars.value != '' and f.vars.value|length) %}
                 <div class="tab-pane fade show{{ loop.first ? ' active' }}" id="tab-{{ field.vars.id }}"
                      role="tabpanel">
                   {{ include([

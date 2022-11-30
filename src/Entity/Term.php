@@ -15,6 +15,7 @@ use Doctrine\ORM\Mapping as ORM;
     'classes' => TermClass::class,
     'items'   => TermItem::class,
     'races'   => TermRace::class,
+    'spells'  => TermSpell::class,
 ])]
 class Term implements TermInterface
 {

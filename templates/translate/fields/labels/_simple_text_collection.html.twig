@@ -1,0 +1,5 @@
+{% for label in attribute(term, field.vars.name) %}
+  <div class="mb-3">
+    <input type="text" value="{{ label }}" class="form-control" disabled readonly />
+  </div>
+{% endfor %}

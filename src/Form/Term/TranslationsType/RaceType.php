@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Form\Term\TranslationsType;
 
+use App\Form\SimpleTextareaCollectionType;
+use App\Form\SimpleTextCollectionType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\CallbackTransformer;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -15,36 +15,15 @@ class RaceType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('subTypes', TextareaType::class, [
+            ->add('subTypes', SimpleTextCollectionType::class, [
                 'required' => false,
                 'label'    => 'Sous-types',
             ])
-            ->add('contextNotes', TextareaType::class, [
+            ->add('contextNotes', SimpleTextareaCollectionType::class, [
                 'required' => false,
                 'label'    => 'Notes de contexte',
             ])
         ;
-
-        $callback = new CallbackTransformer(
-            static function ($value) {
-                if (null === $value) {
-                    return null;
-                }
-
-                return implode(';', $value);
-            },
-            static function ($value) {
-                if (null === $value) {
-                    return null;
-                }
-
-                return explode(';', $value);
-            }
-        );
-
-        $builder->get('subTypes')->addModelTransformer($callback);
-
-        $builder->get('contextNotes')->addModelTransformer($callback);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

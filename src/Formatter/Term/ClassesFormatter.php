@@ -24,7 +24,7 @@ class ClassesFormatter extends AbstractFormatter
         $term = $this->getEntity($pack, $dataset);
 
         $term->setDescription($dataset['data']['description']['value'] ?? '');
-        $term->setCustomWeaponProf($dataset['data']['weaponProf']['custom'] ?? '');
+        $term->setCustomWeaponProf(array_filter(explode(';', $dataset['data']['weaponProf']['custom'] ?? '')));
 
         return $term;
     }

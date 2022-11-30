@@ -18,6 +18,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
     'classes' => TermTranslationClass::class,
     'items'   => TermTranslationItem::class,
     'races'   => TermTranslationRace::class,
+    'spells'  => TermTranslationSpell::class,
 ])]
 class TermTranslation implements TermTranslationInterface
 {

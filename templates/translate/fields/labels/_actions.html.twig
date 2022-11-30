@@ -1,0 +1,25 @@
+{% for action in field.vars.value %}
+  <ul class="list-group">
+    <li class="list-group-item">
+      <strong>Nom :</strong> {{ action.name }}
+    </li>
+    <li class="list-group-item">
+      <strong>Effet du jet de sauvegarde :</strong> {{ action.save }}
+    </li>
+    <li class="list-group-item">
+      <strong>Effet du sort :</strong> {{ action.spellEffect }}
+    </li>
+    <li class="list-group-item">
+      <strong>Cible :</strong> {{ action.target }}
+    </li>
+    <li class="list-group-item">
+      <strong>Zone d'effet :</strong> {{ action.spellArea }}
+    </li>
+    <li class="list-group-item">
+      <strong>Durée :</strong> {{ action.duration }}
+    </li>
+    <li class="list-group-item">
+      <strong>Notes sur les effets :</strong> {{ action.effectNotes|join(' — ') }}
+    </li>
+  </ul>
+{% endfor %}
