@@ -10,6 +10,8 @@ class Items
             'path'      => 'system.identifiedName',
             'converter' => 'name',
         ],
+        'unidentifiedDescription' => 'system.description.unidentified',
+        'unidentifiedName' => 'system.unidentified.name',
     ];
     public array $entries;
 
