@@ -63,6 +63,8 @@ class SpellsFormatter extends AbstractFormatter
 
         $term->setDescription($dataset['data']['shortDescription'] ?? '');
         $term->setMaterials($dataset['data']['materials']['value'] ?? null);
+        $term->setSubschool($dataset['data']['subschool'] ?? null);
+        $term->setTypes($dataset['data']['types'] ?? null);
 
         return $term;
     }

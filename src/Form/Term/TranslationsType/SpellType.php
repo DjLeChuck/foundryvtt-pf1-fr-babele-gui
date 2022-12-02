@@ -40,6 +40,14 @@ class SpellType extends AbstractType
                 'required' => false,
                 'label'    => 'Composantes matérielles',
             ])
+            ->add('subschool', TextType::class, [
+                'required' => false,
+                'label'    => 'Branche',
+            ])
+            ->add('types', TextType::class, [
+                'required' => false,
+                'label'    => 'Types',
+            ])
         ;
     }
 

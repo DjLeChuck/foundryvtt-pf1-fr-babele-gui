@@ -27,6 +27,12 @@ trait SpellTrait
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $materials = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $subschool = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $types = null;
+
     public function getActions(): ?array
     {
         return $this->actions;
@@ -85,5 +91,25 @@ trait SpellTrait
     public function setMaterials(?string $materials): void
     {
         $this->materials = $materials;
+    }
+
+    public function getSubschool(): ?string
+    {
+        return $this->subschool;
+    }
+
+    public function setSubschool(?string $subschool): void
+    {
+        $this->subschool = $subschool;
+    }
+
+    public function getTypes(): ?string
+    {
+        return $this->types;
+    }
+
+    public function setTypes(?string $types): void
+    {
+        $this->types = $types;
     }
 }
