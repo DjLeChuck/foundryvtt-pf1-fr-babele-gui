@@ -7,4 +7,6 @@ namespace App\Repository;
 interface TermRepositoryInterface
 {
     public function findAllWithTranslations(): array;
+
+    public function findForExport(): iterable;
 }

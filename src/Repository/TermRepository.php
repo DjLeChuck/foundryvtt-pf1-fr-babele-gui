@@ -43,29 +43,6 @@ class TermRepository extends ServiceEntityRepository
         }
     }
 
-    public function findAllWithTranslations(): array
-    {
-        $qb = $this->createQueryBuilder('o');
-        $qb
-            ->addSelect('t')
-            ->leftJoin('o.translation', 't')
-        ;
-
-        return $qb->getQuery()->getResult();
-    }
-
-    public function findPartialByPack(string $pack): array
-    {
-        $qb = $this->createQueryBuilder('o');
-        $qb
-            ->select('PARTIAL o.{id, name}')
-            ->where('o.pack = :pack')
-            ->setParameter('pack', $pack)
-        ;
-
-        return $qb->getQuery()->setHint(Query::HINT_FORCE_PARTIAL_LOAD, 1)->getResult();
-    }
-
     public function findPartialWithTranslationByPack(string $pack): array
     {
         $qb = $this->createQueryBuilder('o');
@@ -123,7 +100,9 @@ class TermRepository extends ServiceEntityRepository
 
         if (null !== $filter->getTerm()) {
             $qb
-                ->andWhere($qb->expr()->orX('o.packId = :filterId', 'LOWER(o.name) LIKE :filter', 'LOWER(t.name) LIKE :filter'))
+                ->andWhere(
+                    $qb->expr()->orX('o.packId = :filterId', 'LOWER(o.name) LIKE :filter', 'LOWER(t.name) LIKE :filter')
+                )
                 ->setParameter('filterId', mb_strtolower($filter->getTerm()))
                 ->setParameter('filter', mb_strtolower('%'.$filter->getTerm().'%'))
             ;
@@ -159,6 +138,8 @@ class TermRepository extends ServiceEntityRepository
             ->distinct()
             ->select('o.pack')
             ->orderBy('o.pack')
+            ->where('o.pack = :pack')
+            ->setParameter('pack', 'classes')
         ;
 
         return array_map(static fn(array $row) => $row['pack'], $qb->getQuery()->getArrayResult());
@@ -194,22 +175,6 @@ class TermRepository extends ServiceEntityRepository
         ;
 
         return $qb->getQuery()->setHint(Query::HINT_FORCE_PARTIAL_LOAD, 1)->getResult();
-    }
-
-    public function findByPackForExport(string $pack): array
-    {
-        $qb = $this->createQueryBuilder('o', 'o.name');
-        $qb
-            ->select(
-                'o.name term, coalesce(t.name, o.name) as name, coalesce(t.description, o.description) as description'
-            )
-            ->leftJoin('o.translation', 't')
-            ->where('o.pack = :pack')
-            ->orderBy('o.name')
-            ->setParameter('pack', $pack)
-        ;
-
-        return $qb->getQuery()->getArrayResult();
     }
 
     public function fetchMatchingBestiary(): array

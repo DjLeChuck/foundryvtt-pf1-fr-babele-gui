@@ -5,26 +5,17 @@ declare(strict_types=1);
 namespace App\Repository;
 
 use App\Entity\TermSpell;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
-class TermSpellRepository extends ServiceEntityRepository implements TermRepositoryInterface
+class TermSpellRepository extends AbstractTermRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, TermSpell::class);
     }
 
-    public function findAllWithTranslations(): array
+    protected function getType(): string
     {
-        $qb = $this->createQueryBuilder('o');
-        $qb
-            ->addSelect('t')
-            ->leftJoin('o.translation', 't')
-            ->where('o INSTANCE OF :type')
-            ->setParameter('type', 'spells')
-        ;
-
-        return $qb->getQuery()->getResult();
+        return 'spells';
     }
 }
