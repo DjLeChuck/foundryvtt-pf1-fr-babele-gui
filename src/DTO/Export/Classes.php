@@ -8,12 +8,12 @@ class Classes
     public array $mapping = [
         'customWeaponProf'     => [
             'path'      => 'system.weaponProf.custom',
-            'converter' => 'customWeaponProf',
+            'converter' => 'semicolonList',
         ],
     ];
-    public array $entries;
+    public iterable $entries;
 
-    public function __construct(array $entries)
+    public function __construct(iterable $entries)
     {
         $this->entries = $entries;
     }

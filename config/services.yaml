@@ -12,6 +12,8 @@ services:
     _instanceof:
         App\Formatter\TermFormatterInterface:
             tags: ['app.term_formatter']
+        App\Serializer\Callback\CallbackInterface:
+            tags: ['app.serializer_callback']
 
     # makes classes in src/ available to be used as services
     # this creates a service per class whose id is the fully-qualified class name
@@ -51,3 +53,7 @@ services:
     App\Security\Voter\TermVoter:
         arguments:
             $approvers: '%env(json:TRANSLATIONS_APPROVERS)%'
+
+    App\Serializer\Callback:
+        arguments:
+            - !tagged_iterator 'app.serializer_callback'

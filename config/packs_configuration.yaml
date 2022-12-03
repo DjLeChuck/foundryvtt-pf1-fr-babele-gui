@@ -41,18 +41,22 @@ parameters:
         classes:
             dto: App\DTO\Export\Classes
             packName: pf1.classes.json
+            entity: App\Entity\TermClass
         commonbuffs:
             dto: App\DTO\Export\CommonBuffs
             packName: pf1.commonbuffs.json
+            entity: App\Entity\TermCommonBuff
         conditions:
             dto: App\DTO\Export\Conditions
             packName: pf1.conditions.json
         feats:
             dto: App\DTO\Export\Feats
             packName: pf1.feats.json
+            entity: App\Entity\TermFeat
         items:
             dto: App\DTO\Export\Items
             packName: pf1.items.json
+            entity: App\Entity\TermItem
         monster-templates:
             dto: App\DTO\Export\MonsterTemplates
             packName: pf1.monster-templates.json
@@ -62,6 +66,7 @@ parameters:
         races:
             dto: App\DTO\Export\Races
             packName: pf1.races.json
+            entity: App\Entity\TermRace
         racial-hd:
             dto: App\DTO\Export\RacialHD
             packName: pf1.racialhd.json
@@ -77,6 +82,7 @@ parameters:
         spells:
             dto: App\DTO\Export\Spells
             packName: pf1.spells.json
+            entity: App\Entity\TermSpell
         ultimate-equipment:
             dto: App\DTO\Export\UltimateEquipment
             packName: pf1.ultimate-equipment.json

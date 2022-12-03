@@ -16,7 +16,7 @@ class Feats
         ],
         'customWeaponProf' => [
             'path'      => 'system.weaponProf.custom',
-            'converter' => 'customWeaponProf',
+            'converter' => 'semicolonList',
         ],
         'tags'             => [
             'path'      => 'system.tags',
