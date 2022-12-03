@@ -5,9 +5,9 @@ namespace App\DTO\Export;
 class ClassAbilities
 {
     public string $label = 'Aptitudes de classe';
-    public array $entries;
+    public iterable $entries;
 
-    public function __construct(array $entries)
+    public function __construct(iterable $entries)
     {
         $this->entries = $entries;
     }

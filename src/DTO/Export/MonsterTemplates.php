@@ -5,9 +5,9 @@ namespace App\DTO\Export;
 class MonsterTemplates
 {
     public string $label = 'Archétypes de monstres';
-    public array $entries;
+    public iterable $entries;
 
-    public function __construct(array $entries)
+    public function __construct(iterable $entries)
     {
         $this->entries = $entries;
     }

@@ -31,9 +31,9 @@ class Spells
         'subschool'          => 'system.subschools',
         'types'              => 'system.types',
     ];
-    public array $entries;
+    public iterable $entries;
 
-    public function __construct(array $entries)
+    public function __construct(iterable $entries)
     {
         $this->entries = $entries;
     }

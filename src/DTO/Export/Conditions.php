@@ -5,9 +5,9 @@ namespace App\DTO\Export;
 class Conditions
 {
     public string $label = 'États préjudiciables';
-    public array $entries;
+    public iterable $entries;
 
-    public function __construct(array $entries)
+    public function __construct(iterable $entries)
     {
         $this->entries = $entries;
     }

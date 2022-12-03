@@ -5,9 +5,9 @@ namespace App\DTO\Export;
 class Skills
 {
     public string $label = 'Compétences';
-    public array $entries;
+    public iterable $entries;
 
-    public function __construct(array $entries)
+    public function __construct(iterable $entries)
     {
         $this->entries = $entries;
     }
