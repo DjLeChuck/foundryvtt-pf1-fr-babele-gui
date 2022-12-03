@@ -47,6 +47,47 @@ abstract class AbstractFormatter implements TermFormatterInterface
         }
     }
 
+    protected function setActions(mixed $term, array $dataset): void
+    {
+        $actions = [];
+
+        foreach ($dataset['data']['actions'] ?? [] as $action) {
+            $actions[] = [
+                'name'        => $action['name'],
+                'duration'    => $action['duration']['value'] ?? '',
+                'save'        => $action['save']['description'],
+                'spellEffect' => $action['spellEffect'],
+                'spellArea'   => $action['spellArea'],
+                'effectNotes' => $action['effectNotes'],
+                'target'      => $action['target']['value'] ?? '',
+            ];
+        }
+
+        $term->setActions($actions);
+    }
+
+    protected function setContextNotes(mixed $term, array $dataset): void
+    {
+        $contextNotes = [];
+
+        foreach ($dataset['data']['contextNotes'] ?? [] as $note) {
+            $contextNotes[] = $note['text'];
+        }
+
+        $term->setContextNotes($contextNotes);
+    }
+
+    protected function setTags(mixed $term, array $dataset): void
+    {
+        $tags = [];
+
+        foreach ($dataset['data']['tags'] ?? [] as $tag) {
+            $tags[] = current($tag);
+        }
+
+        $term->setTags($tags);
+    }
+
     private function setPackId(TermInterface $term, array $dataset): void
     {
         if (!isset($dataset['_id'])) {

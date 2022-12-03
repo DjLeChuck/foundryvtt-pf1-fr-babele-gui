@@ -23,34 +23,12 @@ class FeatsFormatter extends AbstractFormatter
         /** @var TermFeat $term */
         $term = $this->getEntity($pack, $dataset);
 
-        $actions = [];
-        foreach ($dataset['data']['actions'] ?? [] as $action) {
-            $actions[] = [
-                'name'        => $action['name'],
-                'duration'    => $action['duration']['value'] ?? '',
-                'save'        => $action['save']['description'],
-                'spellEffect' => $action['spellEffect'],
-                'spellArea'   => $action['spellArea'],
-                'effectNotes' => $action['effectNotes'],
-                'target'      => $action['target']['value'] ?? '',
-            ];
-        }
-        $term->setActions($actions);
-
-        $contextNotes = [];
-        foreach ($dataset['data']['contextNotes'] ?? [] as $note) {
-            $contextNotes[] = $note['text'];
-        }
-        $term->setContextNotes($contextNotes);
-
-        $tags = [];
-        foreach ($dataset['data']['tags'] ?? [] as $tag) {
-            $tags[] = current($tag);
-        }
-        $term->setTags($tags);
-
         $term->setDescription($dataset['data']['description']['value'] ?? '');
         $term->setCustomWeaponProf(array_filter(explode(';', $dataset['data']['weaponProf']['custom'] ?? '')));
+
+        $this->setActions($term, $dataset);
+        $this->setContextNotes($term, $dataset);
+        $this->setTags($term, $dataset);
 
         return $term;
     }

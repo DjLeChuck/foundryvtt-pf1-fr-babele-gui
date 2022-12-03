@@ -23,20 +23,15 @@ class RacesFormatter extends AbstractFormatter
         /** @var TermRace $term */
         $term = $this->getEntity($pack, $dataset);
 
-        $contextNotes = [];
+        $term->setDescription($dataset['data']['description']['value'] ?? '');
+
+        $this->setContextNotes($term, $dataset);
+
         $subTypes = [];
-
-        foreach ($dataset['data']['contextNotes'] ?? [] as $note) {
-            $contextNotes[] = $note['text'];
-        }
-
         foreach ($dataset['data']['subTypes'] ?? [] as $subType) {
             $subTypes[] = current($subType);
         }
-
-        $term->setDescription($dataset['data']['description']['value'] ?? '');
-        $term->setSubTypes(!empty($subTypes) ? $subTypes : null);
-        $term->setContextNotes(!empty($contextNotes) ? $contextNotes : null);
+        $term->setSubTypes($subTypes);
 
         return $term;
     }

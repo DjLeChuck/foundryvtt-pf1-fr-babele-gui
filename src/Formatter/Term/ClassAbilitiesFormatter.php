@@ -25,38 +25,15 @@ class ClassAbilitiesFormatter extends AbstractFormatter
 
         $term->setDescription($dataset['data']['description']['value'] ?? '');
 
-        $actions = [];
-        foreach ($dataset['data']['actions'] ?? [] as $action) {
-            $actions[] = [
-                'name'        => $action['name'],
-                'duration'    => 'spec' === ($action['duration']['units'] ?? '') ? $action['duration']['value'] ?? '' : '',
-                'range'       => 'spec' === ($action['range']['units'] ?? '') ? $action['range']['value'] ?? '' : '',
-                'save'        => $action['save']['description'],
-                'spellEffect' => $action['spellEffect'],
-                'spellArea'   => $action['spellArea'],
-                'effectNotes' => $action['effectNotes'],
-                'target'      => $action['target']['value'] ?? '',
-            ];
-        }
-        $term->setActions($actions);
+        $this->setActions($term, $dataset);
+        $this->setContextNotes($term, $dataset);
+        $this->setTags($term, $dataset);
 
         $classes = [];
         foreach ($dataset['data']['associations']['classes'] ?? [] as $class) {
             $classes[] = current($class);
         }
         $term->setClasses($classes);
-
-        $contextNotes = [];
-        foreach ($dataset['data']['contextNotes'] ?? [] as $note) {
-            $contextNotes[] = $note['text'];
-        }
-        $term->setContextNotes($contextNotes);
-
-        $tags = [];
-        foreach ($dataset['data']['tags'] ?? [] as $tag) {
-            $tags[] = current($tag);
-        }
-        $term->setTags($tags);
 
         return $term;
     }

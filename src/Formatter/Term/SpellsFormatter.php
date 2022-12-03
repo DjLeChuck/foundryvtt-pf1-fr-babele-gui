@@ -23,48 +23,16 @@ class SpellsFormatter extends AbstractFormatter
         /** @var TermSpell $term */
         $term = $this->getEntity($pack, $dataset);
 
-        $actions = [];
-        foreach ($dataset['data']['actions'] ?? [] as $action) {
-            $actions[] = [
-                'name'        => $action['name'],
-                'duration'    => $action['duration']['value'] ?? '',
-                'save'        => $action['save']['description'],
-                'spellEffect' => $action['spellEffect'],
-                'spellArea'   => $action['spellArea'],
-                'effectNotes' => $action['effectNotes'],
-                'target'      => $action['target']['value'] ?? '',
-            ];
-        }
-        $term->setActions($actions);
-
-        $learnedAt = [];
-        foreach ($dataset['data']['learnedAt']['class'] as $learned) {
-            $learnedAt[] = current($learned);
-        }
-        $term->setLearnedAtClasses($learnedAt);
-
-        $learnedAt = [];
-        foreach ($dataset['data']['learnedAt']['domain'] as $learned) {
-            $learnedAt[] = current($learned);
-        }
-        $term->setLearnedAtDomains($learnedAt);
-
-        $learnedAt = [];
-        foreach ($dataset['data']['learnedAt']['subDomain'] as $learned) {
-            $learnedAt[] = current($learned);
-        }
-        $term->setLearnedAtSubDomains($learnedAt);
-
-        $learnedAt = [];
-        foreach ($dataset['data']['learnedAt']['bloodline'] as $learned) {
-            $learnedAt[] = current($learned);
-        }
-        $term->setLearnedAtBloodlines($learnedAt);
-
         $term->setDescription($dataset['data']['shortDescription'] ?? '');
         $term->setMaterials($dataset['data']['materials']['value'] ?? null);
         $term->setSubschool($dataset['data']['subschool'] ?? null);
         $term->setTypes($dataset['data']['types'] ?? null);
+        $term->setLearnedAtClasses($this->getLearnedAt('class', $dataset));
+        $term->setLearnedAtDomains($this->getLearnedAt('domain', $dataset));
+        $term->setLearnedAtSubDomains($this->getLearnedAt('subDomain', $dataset));
+        $term->setLearnedAtBloodlines($this->getLearnedAt('bloodline', $dataset));
+
+        $this->setActions($term, $dataset);
 
         return $term;
     }
@@ -72,5 +40,16 @@ class SpellsFormatter extends AbstractFormatter
     protected function getEntityClass(): string
     {
         return TermSpell::class;
+    }
+
+    private function getLearnedAt(string $key, array $dataset): array
+    {
+        $learnedAt = [];
+
+        foreach ($dataset['data']['learnedAt'][$key] as $learned) {
+            $learnedAt[] = current($learned);
+        }
+
+        return $learnedAt;
     }
 }

@@ -23,20 +23,15 @@ class CommonBuffsFormatter extends AbstractFormatter
         /** @var TermCommonBuff $term */
         $term = $this->getEntity($pack, $dataset);
 
-        $contextNotes = [];
+        $term->setDescription($dataset['data']['description']['value'] ?? '');
+
+        $this->setContextNotes($term, $dataset);
+
         $flags = [];
-
-        foreach ($dataset['data']['contextNotes'] ?? [] as $note) {
-            $contextNotes[] = $note['text'];
-        }
-
         foreach ($dataset['data']['flags']['dictionary'] ?? [] as $value) {
             $flags[] = end($value);
         }
-
-        $term->setDescription($dataset['data']['description']['value'] ?? '');
-        $term->setDictionaryFlags(!empty($flags) ? $flags : null);
-        $term->setContextNotes(!empty($contextNotes) ? $contextNotes : null);
+        $term->setDictionaryFlags($flags);
 
         return $term;
     }
