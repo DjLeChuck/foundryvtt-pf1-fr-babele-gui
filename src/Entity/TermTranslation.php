@@ -22,6 +22,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
     'feats'              => TermTranslationFeat::class,
     'items'              => TermTranslationItem::class,
     'monster-templates'  => TermTranslationMonsterTemplate::class,
+    'mythic-paths'       => TermTranslationMythicPath::class,
     'races'              => TermTranslationRace::class,
     'spells'             => TermTranslationSpell::class,
 ])]

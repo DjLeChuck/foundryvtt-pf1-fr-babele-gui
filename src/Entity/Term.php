@@ -19,6 +19,7 @@ use Doctrine\ORM\Mapping as ORM;
     'feats'              => TermFeat::class,
     'items'              => TermItem::class,
     'monster-templates'  => TermMonsterTemplate::class,
+    'mythic-paths'       => TermMythicPath::class,
     'races'              => TermRace::class,
     'spells'             => TermSpell::class,
 ])]
