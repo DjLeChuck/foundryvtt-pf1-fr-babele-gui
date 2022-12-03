@@ -3,28 +3,27 @@
 namespace App\Formatter\Term;
 
 use App\Entity\TermInterface;
-use App\Entity\TermUltimateEquipment;
-use App\Repository\TermUltimateEquipmentRepository;
+use App\Entity\TermRollTable;
+use App\Repository\TermRollTableRepository;
 
-class UltimateEquipmentFormatter extends AbstractFormatter
+class RollTableFormatter extends AbstractFormatter
 {
-    public function __construct(TermUltimateEquipmentRepository $repository)
+    public function __construct(TermRollTableRepository $repository)
     {
         $this->repository = $repository;
     }
 
     public function supports(string $pack): bool
     {
-        return 'ultimate-equipment' === $pack;
+        return 'roll-tables' === $pack;
     }
 
     public function format(string $pack, array $dataset): TermInterface
     {
-        /** @var TermUltimateEquipment $term */
+        /** @var TermRollTable $term */
         $term = $this->getEntity($pack, $dataset);
 
         $term->setDescription($dataset['description'] ?? '');
-
         $this->setResultsText($term, $dataset);
 
         return $term;
@@ -32,6 +31,6 @@ class UltimateEquipmentFormatter extends AbstractFormatter
 
     protected function getEntityClass(): string
     {
-        return TermUltimateEquipment::class;
+        return TermRollTable::class;
     }
 }

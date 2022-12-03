@@ -25,6 +25,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
     'mythic-paths'       => TermTranslationMythicPath::class,
     'races'              => TermTranslationRace::class,
     'racial-hd'          => TermTranslationRacialHd::class,
+    'roll-tables'        => TermTranslationRollTable::class,
     'spells'             => TermTranslationSpell::class,
     'ultimate-equipment' => TermTranslationUltimateEquipment::class,
 ])]

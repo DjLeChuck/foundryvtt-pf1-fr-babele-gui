@@ -4,18 +4,18 @@ declare(strict_types=1);
 
 namespace App\Serializer\Callback;
 
-use App\Entity\TermTranslationUltimateEquipment;
-use App\Entity\TermUltimateEquipment;
+use App\Entity\TermRollTable;
+use App\Entity\TermTranslationRollTable;
 
-class UltimateEquipmentCallback implements CallbackInterface
+class RollTableCallback implements CallbackInterface
 {
     public function supports(string $pack): bool
     {
-        return 'ultimate-equipment' === $pack;
+        return 'roll-tables' === $pack;
     }
 
     /**
-     * @param TermUltimateEquipment[] $terms
+     * @param TermRollTable[] $terms
      *
      * @return array
      */
@@ -26,7 +26,7 @@ class UltimateEquipmentCallback implements CallbackInterface
         foreach ($terms as $term) {
             $name = $term->getName();
 
-            /** @var TermTranslationUltimateEquipment $translation */
+            /** @var TermTranslationRollTable $translation */
             $translation = $term->getTranslation();
             $entries[$name] = array_filter([
                 'name'        => $translation->getName() ?? $name,

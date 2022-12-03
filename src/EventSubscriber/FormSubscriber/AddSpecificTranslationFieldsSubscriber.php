@@ -59,6 +59,10 @@ class AddSpecificTranslationFieldsSubscriber implements EventSubscriberInterface
             }
 
             $form->add($field->getForm());
+
+            if ('simple_description' === $specificForm->getName()) {
+                $form->remove('description');
+            }
         }
     }
 }

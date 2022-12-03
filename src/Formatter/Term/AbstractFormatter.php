@@ -88,6 +88,17 @@ abstract class AbstractFormatter implements TermFormatterInterface
         $term->setTags($tags);
     }
 
+    protected function setResultsText(mixed $term, array $dataset): void
+    {
+        $results = [];
+
+        foreach ($dataset['results'] ?? [] as $result) {
+            $results[] = $result['text'];
+        }
+
+        $term->setResults($results);
+    }
+
     private function setPackId(TermInterface $term, array $dataset): void
     {
         if (!isset($dataset['_id'])) {

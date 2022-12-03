@@ -22,6 +22,7 @@ use Doctrine\ORM\Mapping as ORM;
     'mythic-paths'       => TermMythicPath::class,
     'races'              => TermRace::class,
     'racial-hd'          => TermRacialHd::class,
+    'roll-tables'        => TermRollTable::class,
     'spells'             => TermSpell::class,
     'ultimate-equipment' => TermUltimateEquipment::class,
 ])]
