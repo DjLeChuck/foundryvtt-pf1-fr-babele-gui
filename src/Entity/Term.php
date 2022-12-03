@@ -23,6 +23,7 @@ use Doctrine\ORM\Mapping as ORM;
     'races'              => TermRace::class,
     'racial-hd'          => TermRacialHd::class,
     'spells'             => TermSpell::class,
+    'ultimate-equipment' => TermUltimateEquipment::class,
 ])]
 class Term implements TermInterface
 {
@@ -37,7 +38,7 @@ class Term implements TermInterface
     #[ORM\Column(length: 255)]
     protected ?string $name = null;
 
-    #[ORM\Column(type: Types::TEXT)]
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
     protected ?string $description = null;
 
     #[ORM\Column(length: 255)]
@@ -81,7 +82,7 @@ class Term implements TermInterface
         return $this->description;
     }
 
-    public function setDescription(string $description): void
+    public function setDescription(?string $description): void
     {
         $this->description = $description;
     }

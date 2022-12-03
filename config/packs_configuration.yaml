@@ -85,6 +85,7 @@ parameters:
         ultimate-equipment:
             dto: App\DTO\Export\UltimateEquipment
             packName: pf1.ultimate-equipment.json
+            entity: App\Entity\TermUltimateEquipment
         weapons-and-ammo:
             dto: App\DTO\Export\WeaponsAndAmmo
             packName: pf1.weapons-and-ammo.json

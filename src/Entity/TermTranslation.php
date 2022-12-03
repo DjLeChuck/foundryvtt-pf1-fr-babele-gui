@@ -26,6 +26,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
     'races'              => TermTranslationRace::class,
     'racial-hd'          => TermTranslationRacialHd::class,
     'spells'             => TermTranslationSpell::class,
+    'ultimate-equipment' => TermTranslationUltimateEquipment::class,
 ])]
 class TermTranslation implements TermTranslationInterface
 {
@@ -38,7 +39,7 @@ class TermTranslation implements TermTranslationInterface
     #[Gedmo\Versioned]
     protected ?string $name = null;
 
-    #[ORM\Column(type: Types::TEXT)]
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
     #[Gedmo\Versioned]
     protected ?string $description = null;
 
@@ -77,7 +78,7 @@ class TermTranslation implements TermTranslationInterface
         return $this->description;
     }
 
-    public function setDescription(string $description): void
+    public function setDescription(?string $description): void
     {
         $this->description = $description;
     }
