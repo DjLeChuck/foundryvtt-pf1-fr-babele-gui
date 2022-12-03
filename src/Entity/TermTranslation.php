@@ -28,6 +28,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
     'roll-tables'        => TermTranslationRollTable::class,
     'spells'             => TermTranslationSpell::class,
     'ultimate-equipment' => TermTranslationUltimateEquipment::class,
+    'weapons-and-ammo'   => TermTranslationWeaponAndAmmo::class,
 ])]
 class TermTranslation implements TermTranslationInterface
 {

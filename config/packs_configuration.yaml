@@ -90,3 +90,4 @@ parameters:
         weapons-and-ammo:
             dto: App\DTO\Export\WeaponsAndAmmo
             packName: pf1.weapons-and-ammo.json
+            entity: App\Entity\TermWeaponAndAmmo

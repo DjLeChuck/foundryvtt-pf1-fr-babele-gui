@@ -25,6 +25,7 @@ use Doctrine\ORM\Mapping as ORM;
     'roll-tables'        => TermRollTable::class,
     'spells'             => TermSpell::class,
     'ultimate-equipment' => TermUltimateEquipment::class,
+    'weapons-and-ammo'   => TermWeaponAndAmmo::class,
 ])]
 class Term implements TermInterface
 {
