@@ -21,6 +21,7 @@ use Doctrine\ORM\Mapping as ORM;
     'monster-templates'  => TermMonsterTemplate::class,
     'mythic-paths'       => TermMythicPath::class,
     'races'              => TermRace::class,
+    'racial-hd'          => TermRacialHd::class,
     'spells'             => TermSpell::class,
 ])]
 class Term implements TermInterface

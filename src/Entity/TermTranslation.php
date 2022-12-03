@@ -24,6 +24,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
     'monster-templates'  => TermTranslationMonsterTemplate::class,
     'mythic-paths'       => TermTranslationMythicPath::class,
     'races'              => TermTranslationRace::class,
+    'racial-hd'          => TermTranslationRacialHd::class,
     'spells'             => TermTranslationSpell::class,
 ])]
 class TermTranslation implements TermTranslationInterface

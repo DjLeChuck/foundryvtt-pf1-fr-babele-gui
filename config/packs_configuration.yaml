@@ -71,6 +71,7 @@ parameters:
         racial-hd:
             dto: App\DTO\Export\RacialHD
             packName: pf1.racialhd.json
+            entity: App\Entity\TermRacialHd
         roll-tables:
             dto: App\DTO\Export\RollTables
             packName: pf1.roll-tables.json
