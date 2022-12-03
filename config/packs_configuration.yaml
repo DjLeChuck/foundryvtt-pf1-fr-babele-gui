@@ -3,6 +3,7 @@ parameters:
         armors-and-shields:
             dto: App\DTO\Export\ArmorsAndShields
             packName: pf1.armors-and-shields.json
+            entity: App\Entity\TermArmorAndShield
         bestiary-00:
             dto: App\DTO\Export\Bestiary
             packName: pf1-bestiary.bestiary-00.json
@@ -38,6 +39,7 @@ parameters:
         class-abilities:
             dto: App\DTO\Export\ClassAbilities
             packName: pf1.class-abilities.json
+            entity: App\Entity\TermClassAbility
         classes:
             dto: App\DTO\Export\Classes
             packName: pf1.classes.json

@@ -28,11 +28,11 @@ class ClassesCallback implements CallbackInterface
 
             /** @var TermTranslationClass $translation */
             $translation = $term->getTranslation();
-            $entries[$name] = [
+            $entries[$name] = array_filter([
                 'name'             => $translation->getName() ?? $name,
                 'description'      => $translation->getDescription() ?? $term->getDescription(),
-                'customWeaponProf' => $translation->getCustomWeaponProf() ?? $term->getCustomWeaponProf() ?? [],
-            ];
+                'customWeaponProf' => $translation->getCustomWeaponProf() ?? $term->getCustomWeaponProf(),
+            ]);
         }
 
         return $entries;

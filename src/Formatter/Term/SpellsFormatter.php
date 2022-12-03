@@ -24,7 +24,7 @@ class SpellsFormatter extends AbstractFormatter
         $term = $this->getEntity($pack, $dataset);
 
         $actions = [];
-        foreach ($dataset['data']['actions'] as $action) {
+        foreach ($dataset['data']['actions'] ?? [] as $action) {
             $actions[] = [
                 'name'        => $action['name'],
                 'duration'    => $action['duration']['value'] ?? '',

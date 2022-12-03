@@ -4,18 +4,18 @@ declare(strict_types=1);
 
 namespace App\Serializer\Callback;
 
-use App\Entity\TermRace;
-use App\Entity\TermTranslationRace;
+use App\Entity\TermClassAbility;
+use App\Entity\TermTranslationClassAbility;
 
-class RacesCallback implements CallbackInterface
+class ClassesAbilitiesCallback implements CallbackInterface
 {
     public function supports(string $pack): bool
     {
-        return 'races' === $pack;
+        return 'class-abilities' === $pack;
     }
 
     /**
-     * @param TermRace[] $terms
+     * @param TermClassAbility[] $terms
      *
      * @return array
      */
@@ -26,13 +26,15 @@ class RacesCallback implements CallbackInterface
         foreach ($terms as $term) {
             $name = $term->getName();
 
-            /** @var TermTranslationRace $translation */
+            /** @var TermTranslationClassAbility $translation */
             $translation = $term->getTranslation();
             $entries[$name] = array_filter([
                 'name'         => $translation->getName() ?? $name,
                 'description'  => $translation->getDescription() ?? $term->getDescription(),
+                'actions'      => $translation->getActions() ?? $term->getActions(),
                 'contextNotes' => $translation->getContextNotes() ?? $term->getContextNotes(),
-                'subTypes'     => $translation->getSubTypes() ?? $term->getSubTypes(),
+                'tags'         => $translation->getTags() ?? $term->getTags(),
+                'classes'      => $translation->getClasses() ?? $term->getClasses(),
             ]);
         }
 

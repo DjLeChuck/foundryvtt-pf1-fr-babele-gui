@@ -138,6 +138,8 @@ class TermRepository extends ServiceEntityRepository
             ->distinct()
             ->select('o.pack')
             ->orderBy('o.pack')
+            ->where('o.pack = :pack')
+            ->setParameter('pack', 'class-abilities')
         ;
 
         return array_map(static fn(array $row) => $row['pack'], $qb->getQuery()->getArrayResult());

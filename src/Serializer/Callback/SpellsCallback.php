@@ -28,7 +28,7 @@ class SpellsCallback implements CallbackInterface
 
             /** @var TermTranslationSpell $translation */
             $translation = $term->getTranslation();
-            $entries[$name] = [
+            $entries[$name] = array_filter([
                 'name'               => $translation->getName() ?? $name,
                 'description'        => $translation->getDescription() ?? $term->getDescription(),
                 'actions'            => $translation->getActions() ?? $term->getActions(),
@@ -39,7 +39,7 @@ class SpellsCallback implements CallbackInterface
                 'materials'          => $translation->getMaterials() ?? $term->getMaterials(),
                 'subschool'          => $translation->getSubschool() ?? $term->getSubschool(),
                 'types'              => $translation->getTypes() ?? $term->getTypes(),
-            ];
+            ]);
         }
 
         return $entries;

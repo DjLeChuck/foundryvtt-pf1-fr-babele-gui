@@ -28,14 +28,14 @@ class FeatsCallback implements CallbackInterface
 
             /** @var TermTranslationFeat $translation */
             $translation = $term->getTranslation();
-            $entries[$name] = [
+            $entries[$name] = array_filter([
                 'name'             => $translation->getName() ?? $name,
                 'description'      => $translation->getDescription() ?? $term->getDescription(),
                 'actions'          => $translation->getActions() ?? $term->getActions(),
                 'contextNotes'     => $translation->getContextNotes() ?? $term->getContextNotes(),
                 'customWeaponProf' => $translation->getCustomWeaponProf() ?? $term->getCustomWeaponProf(),
                 'tags'             => $translation->getTags() ?? $term->getTags(),
-            ];
+            ]);
         }
 
         return $entries;

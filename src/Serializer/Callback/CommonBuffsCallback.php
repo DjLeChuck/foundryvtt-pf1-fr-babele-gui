@@ -28,12 +28,12 @@ class CommonBuffsCallback implements CallbackInterface
 
             /** @var TermTranslationCommonBuff $translation */
             $translation = $term->getTranslation();
-            $entries[$name] = [
+            $entries[$name] = array_filter([
                 'name'            => $translation->getName() ?? $name,
                 'description'     => $translation->getDescription() ?? $term->getDescription(),
                 'contextNotes'    => $translation->getContextNotes() ?? $term->getContextNotes(),
                 'flagsDictionary' => $translation->getDictionaryFlags() ?? $term->getDictionaryFlags(),
-            ];
+            ]);
         }
 
         return $entries;

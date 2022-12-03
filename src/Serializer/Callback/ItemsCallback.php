@@ -28,13 +28,13 @@ class ItemsCallback implements CallbackInterface
 
             /** @var TermTranslationItem $translation */
             $translation = $term->getTranslation();
-            $entries[$name] = [
+            $entries[$name] = array_filter([
                 'name'                    => $translation->getName() ?? $name,
                 'description'             => $translation->getDescription() ?? $term->getDescription(),
                 'unidentifiedDescription' => $translation->getUnidentifiedDescription()
                     ?? $term->getUnidentifiedDescription(),
                 'unidentifiedName'        => $translation->getUnidentifiedName() ?? $term->getUnidentifiedName(),
-            ];
+            ]);
         }
 
         return $entries;

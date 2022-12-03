@@ -2,32 +2,35 @@
 
 namespace App\Formatter\Term;
 
-use App\Entity\TermFeat;
+use App\Entity\TermClassAbility;
 use App\Entity\TermInterface;
-use App\Repository\TermFeatRepository;
+use App\Repository\TermClassAbilityRepository;
 
-class FeatsFormatter extends AbstractFormatter
+class ClassAbilitiesFormatter extends AbstractFormatter
 {
-    public function __construct(TermFeatRepository $repository)
+    public function __construct(TermClassAbilityRepository $repository)
     {
         $this->repository = $repository;
     }
 
     public function supports(string $pack): bool
     {
-        return 'feats' === $pack;
+        return 'class-abilities' === $pack;
     }
 
     public function format(string $pack, array $dataset): TermInterface
     {
-        /** @var TermFeat $term */
+        /** @var TermClassAbility $term */
         $term = $this->getEntity($pack, $dataset);
+
+        $term->setDescription($dataset['data']['description']['value'] ?? '');
 
         $actions = [];
         foreach ($dataset['data']['actions'] ?? [] as $action) {
             $actions[] = [
                 'name'        => $action['name'],
-                'duration'    => $action['duration']['value'] ?? '',
+                'duration'    => 'spec' === ($action['duration']['units'] ?? '') ? $action['duration']['value'] ?? '' : '',
+                'range'       => 'spec' === ($action['range']['units'] ?? '') ? $action['range']['value'] ?? '' : '',
                 'save'        => $action['save']['description'],
                 'spellEffect' => $action['spellEffect'],
                 'spellArea'   => $action['spellArea'],
@@ -36,6 +39,12 @@ class FeatsFormatter extends AbstractFormatter
             ];
         }
         $term->setActions($actions);
+
+        $classes = [];
+        foreach ($dataset['data']['associations']['classes'] ?? [] as $class) {
+            $classes[] = current($class);
+        }
+        $term->setClasses($classes);
 
         $contextNotes = [];
         foreach ($dataset['data']['contextNotes'] ?? [] as $note) {
@@ -49,14 +58,11 @@ class FeatsFormatter extends AbstractFormatter
         }
         $term->setTags($tags);
 
-        $term->setDescription($dataset['data']['description']['value'] ?? '');
-        $term->setCustomWeaponProf(array_filter(explode(';', $dataset['data']['weaponProf']['custom'] ?? '')));
-
         return $term;
     }
 
     protected function getEntityClass(): string
     {
-        return TermFeat::class;
+        return TermClassAbility::class;
     }
 }

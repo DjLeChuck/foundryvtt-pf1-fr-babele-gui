@@ -36,7 +36,11 @@ class ActionType extends AbstractType
             ])
             ->add('duration', TextType::class, [
                 'required' => false,
-                'label'    => 'Durée',
+                'label'    => 'Durée (Spéciale)',
+            ])
+            ->add('range', TextType::class, [
+                'required' => false,
+                'label'    => 'Portée (Spéciale)',
             ])
             ->add('effectNotes', SimpleTextCollectionType::class, [
                 'required' => false,
