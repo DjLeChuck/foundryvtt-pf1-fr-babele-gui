@@ -48,9 +48,6 @@ parameters:
             dto: App\DTO\Export\CommonBuffs
             packName: pf1.commonbuffs.json
             entity: App\Entity\TermCommonBuff
-        conditions:
-            dto: App\DTO\Export\Conditions
-            packName: pf1.conditions.json
         feats:
             dto: App\DTO\Export\Feats
             packName: pf1.feats.json
@@ -62,6 +59,7 @@ parameters:
         monster-templates:
             dto: App\DTO\Export\MonsterTemplates
             packName: pf1.monster-templates.json
+            entity: App\Entity\TermMonsterTemplate
         mythic-paths:
             dto: App\DTO\Export\MythicPaths
             packName: pf1.mythicpaths.json
@@ -78,9 +76,6 @@ parameters:
         sample-macros:
             dto: App\DTO\Export\SampleMacros
             packName: pf1.sample-macros.json
-        skills:
-            dto: App\DTO\Export\Skills
-            packName: pf1.skills.json
         spells:
             dto: App\DTO\Export\Spells
             packName: pf1.spells.json

@@ -18,6 +18,7 @@ use Doctrine\ORM\Mapping as ORM;
     'commonbuffs'        => TermCommonBuff::class,
     'feats'              => TermFeat::class,
     'items'              => TermItem::class,
+    'monster-templates'  => TermMonsterTemplate::class,
     'races'              => TermRace::class,
     'spells'             => TermSpell::class,
 ])]
