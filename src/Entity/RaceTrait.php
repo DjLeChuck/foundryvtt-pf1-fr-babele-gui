@@ -10,10 +10,23 @@ use Doctrine\ORM\Mapping as ORM;
 trait RaceTrait
 {
     #[ORM\Column(type: Types::JSON, nullable: true)]
+    private ?array $customLanguages = null;
+
+    #[ORM\Column(type: Types::JSON, nullable: true)]
     private ?array $subTypes = null;
 
     #[ORM\Column(type: Types::JSON, nullable: true)]
     private ?array $contextNotes = null;
+
+    public function getCustomLanguages(): ?array
+    {
+        return $this->customLanguages;
+    }
+
+    public function setCustomLanguages(?array $customLanguages): void
+    {
+        $this->customLanguages = $customLanguages;
+    }
 
     public function getSubTypes(): ?array
     {

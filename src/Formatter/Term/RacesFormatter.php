@@ -24,6 +24,7 @@ class RacesFormatter extends AbstractFormatter
         $term = $this->getEntity($pack, $dataset);
 
         $term->setDescription($dataset['data']['description']['value'] ?? '');
+        $term->setCustomLanguages(array_filter(explode(';', $dataset['data']['languages']['custom'] ?? '')));
 
         $this->setContextNotes($term, $dataset);
 

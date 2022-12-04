@@ -15,6 +15,10 @@ class RaceType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
+            ->add('customLanguages', SimpleTextCollectionType::class, [
+                'required' => false,
+                'label'    => 'Langues (spéciale)',
+            ])
             ->add('subTypes', SimpleTextCollectionType::class, [
                 'required' => false,
                 'label'    => 'Sous-types',

@@ -32,6 +32,7 @@ class ClassesCallback implements CallbackInterface
                 'name'             => $translation->getName() ?? $name,
                 'description'      => $translation->getDescription() ?? $term->getDescription(),
                 'customWeaponProf' => $translation->getCustomWeaponProf() ?? $term->getCustomWeaponProf(),
+                'customArmorProf'  => $translation->getCustomArmorProf() ?? $term->getCustomArmorProf(),
             ]);
         }
 

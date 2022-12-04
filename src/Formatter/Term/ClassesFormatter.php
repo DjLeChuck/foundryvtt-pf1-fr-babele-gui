@@ -25,6 +25,7 @@ class ClassesFormatter extends AbstractFormatter
 
         $term->setDescription($dataset['data']['description']['value'] ?? '');
         $term->setCustomWeaponProf(array_filter(explode(';', $dataset['data']['weaponProf']['custom'] ?? '')));
+        $term->setCustomArmorProf(array_filter(explode(';', $dataset['data']['armorProf']['custom'] ?? '')));
 
         return $term;
     }

@@ -29,10 +29,11 @@ class RacesCallback implements CallbackInterface
             /** @var TermTranslationRace $translation */
             $translation = $term->getTranslation();
             $entries[$name] = array_filter([
-                'name'         => $translation->getName() ?? $name,
-                'description'  => $translation->getDescription() ?? $term->getDescription(),
-                'contextNotes' => $translation->getContextNotes() ?? $term->getContextNotes(),
-                'subTypes'     => $translation->getSubTypes() ?? $term->getSubTypes(),
+                'name'            => $translation->getName() ?? $name,
+                'description'     => $translation->getDescription() ?? $term->getDescription(),
+                'contextNotes'    => $translation->getContextNotes() ?? $term->getContextNotes(),
+                'subTypes'        => $translation->getSubTypes() ?? $term->getSubTypes(),
+                'customLanguages' => $translation->getCustomLanguages() ?? $term->getCustomLanguages(),
             ]);
         }
 

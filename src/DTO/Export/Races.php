@@ -6,13 +6,17 @@ class Races
 {
     public string $label = 'Races';
     public array $mapping = [
-        'contextNotes' => [
+        'contextNotes'    => [
             'path'      => 'system.contextNotes',
             'converter' => 'contextNotes',
         ],
-        'subTypes'     => [
+        'subTypes'        => [
             'path'      => 'system.subTypes',
             'converter' => 'arrayOfArray',
+        ],
+        'customLanguages' => [
+            'path'      => 'system.languages.custom',
+            'converter' => 'semicolonList',
         ],
     ];
     public iterable $entries;
