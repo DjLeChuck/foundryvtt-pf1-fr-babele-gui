@@ -16,6 +16,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 #[ORM\DiscriminatorColumn(name: 'discr', type: 'string')]
 #[ORM\DiscriminatorMap([
     'armors-and-shields' => TermTranslationArmorAndShield::class,
+    'bestiary'           => TermTranslationBestiary::class,
     'classes'            => TermTranslationClass::class,
     'class-abilities'    => TermTranslationClassAbility::class,
     'commonbuffs'        => TermTranslationCommonBuff::class,

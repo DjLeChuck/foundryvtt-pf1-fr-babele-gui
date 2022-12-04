@@ -21,7 +21,7 @@ abstract class AbstractTermRepository extends ServiceEntityRepository implements
         return $qb->getQuery()->getResult();
     }
 
-    public function findForExport(): iterable
+    public function findForExport(?string $pack = null): iterable
     {
         $qb = $this->createQueryBuilder('o', 'o.name');
         $qb
@@ -31,6 +31,13 @@ abstract class AbstractTermRepository extends ServiceEntityRepository implements
             ->setParameter('type', $this->getType())
             ->orderBy('o.name')
         ;
+
+        if (null !== $pack) {
+            $qb
+                ->andWhere('o.pack = :pack')
+                ->setParameter('pack', $pack)
+            ;
+        }
 
         return $qb->getQuery()->toIterable();
     }

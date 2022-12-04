@@ -13,6 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\DiscriminatorColumn(name: 'discr', type: 'string')]
 #[ORM\DiscriminatorMap([
     'armors-and-shields' => TermArmorAndShield::class,
+    'bestiary'           => TermBestiary::class,
     'classes'            => TermClass::class,
     'class-abilities'    => TermClassAbility::class,
     'commonbuffs'        => TermCommonBuff::class,

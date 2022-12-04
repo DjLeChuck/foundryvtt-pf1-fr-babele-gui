@@ -49,7 +49,7 @@ class PackExporter
                     throw new \InvalidArgumentException(sprintf('Pas d\'entité configurée pour le pack "%s"', $pack));
                 }
 
-                $dto = new $configuration['dto']($this->getEntries($configuration['entity']));
+                $dto = new $configuration['dto']($this->getEntries($configuration['entity'], $pack));
 
                 if (isset($configuration['label'])) {
                     $dto->label = $configuration['label'];
@@ -78,12 +78,12 @@ class PackExporter
         }
     }
 
-    private function getEntries(string $entity): iterable
+    private function getEntries(string $entity, string $pack): iterable
     {
         /** @var TermRepositoryInterface $repository */
         $repository = $this->entityManager->getRepository($entity);
 
-        return $repository->findForExport();
+        return $repository->findForExport(str_starts_with($pack, 'bestiary-') ? $pack : null);
     }
 
     private function getPath(string $path, string $packName): string

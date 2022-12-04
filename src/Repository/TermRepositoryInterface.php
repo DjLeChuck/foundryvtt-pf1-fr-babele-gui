@@ -8,5 +8,5 @@ interface TermRepositoryInterface
 {
     public function findAllWithTranslations(): array;
 
-    public function findForExport(): iterable;
+    public function findForExport(?string $pack = null): iterable;
 }
