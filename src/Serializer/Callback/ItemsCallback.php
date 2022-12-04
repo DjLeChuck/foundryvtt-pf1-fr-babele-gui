@@ -34,6 +34,8 @@ class ItemsCallback implements CallbackInterface
                 'unidentifiedDescription' => $translation->getUnidentifiedDescription()
                     ?? $term->getUnidentifiedDescription(),
                 'unidentifiedName'        => $translation->getUnidentifiedName() ?? $term->getUnidentifiedName(),
+                'actions'                 => $translation->getActions() ?? $term->getActions(),
+                'contextNotes'            => $translation->getContextNotes() ?? $term->getContextNotes(),
             ]);
         }
 

@@ -27,6 +27,9 @@ class ItemsFormatter extends AbstractFormatter
         $term->setUnidentifiedName($dataset['data']['unidentified']['name'] ?? '');
         $term->setUnidentifiedDescription($dataset['data']['description']['unidentified'] ?? '');
 
+        $this->setActions($term, $dataset);
+        $this->setContextNotes($term, $dataset);
+
         return $term;
     }
 

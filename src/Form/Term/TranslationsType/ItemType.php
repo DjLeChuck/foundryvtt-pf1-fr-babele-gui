@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Form\Term\TranslationsType;
 
+use App\Form\ActionsType;
+use App\Form\SimpleTextareaCollectionType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -22,6 +24,14 @@ class ItemType extends AbstractType
             ->add('unidentifiedDescription', TextareaType::class, [
                 'required' => false,
                 'label'    => 'Description (non identifié)',
+            ])
+            ->add('actions', ActionsType::class, [
+                'required' => false,
+                'label'    => 'Actions',
+            ])
+            ->add('contextNotes', SimpleTextareaCollectionType::class, [
+                'required' => false,
+                'label'    => 'Notes de contexte',
             ])
         ;
     }

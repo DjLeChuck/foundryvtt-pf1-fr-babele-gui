@@ -15,6 +15,12 @@ trait ItemTrait
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $unidentifiedDescription = null;
 
+    #[ORM\Column(type: Types::JSON, nullable: true)]
+    private ?array $actions = null;
+
+    #[ORM\Column(type: Types::JSON, nullable: true)]
+    private ?array $contextNotes = null;
+
     public function getUnidentifiedName(): ?string
     {
         return $this->unidentifiedName;
@@ -33,5 +39,25 @@ trait ItemTrait
     public function setUnidentifiedDescription(?string $unidentifiedDescription): void
     {
         $this->unidentifiedDescription = $unidentifiedDescription;
+    }
+
+    public function getActions(): ?array
+    {
+        return $this->actions;
+    }
+
+    public function setActions(?array $actions): void
+    {
+        $this->actions = $actions;
+    }
+
+    public function getContextNotes(): ?array
+    {
+        return $this->contextNotes;
+    }
+
+    public function setContextNotes(?array $contextNotes): void
+    {
+        $this->contextNotes = $contextNotes;
     }
 }
