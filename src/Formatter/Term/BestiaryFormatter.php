@@ -24,6 +24,7 @@ class BestiaryFormatter extends AbstractFormatter
         $term = $this->getEntity($pack, $dataset);
 
         $term->setDescription($dataset['data']['description']['value'] ?? '');
+        $term->setImg($dataset['img']);
 
         return $term;
     }
