@@ -33,7 +33,10 @@ class RacesCallback implements CallbackInterface
                 'description'     => $translation->getDescription() ?? $term->getDescription(),
                 'contextNotes'    => $translation->getContextNotes() ?? $term->getContextNotes(),
                 'subTypes'        => $translation->getSubTypes() ?? $term->getSubTypes(),
-                'customLanguages' => $translation->getCustomLanguages() ?? $term->getCustomLanguages(),
+                'customLanguages' => implode(
+                    ';',
+                        $translation->getCustomLanguages() ?? $term->getCustomLanguages() ?: []
+                ),
             ]);
         }
 

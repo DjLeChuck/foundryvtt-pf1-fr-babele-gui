@@ -7,12 +7,10 @@ class Classes
     public string $label = 'Classes';
     public array $mapping = [
         'customWeaponProf' => [
-            'path'      => 'system.weaponProf.custom',
-            'converter' => 'semicolonList',
+            'path' => 'system.weaponProf.custom',
         ],
         'customArmorProf'  => [
-            'path'      => 'system.armorProf.custom',
-            'converter' => 'semicolonList',
+            'path' => 'system.armorProf.custom',
         ],
     ];
     public iterable $entries;

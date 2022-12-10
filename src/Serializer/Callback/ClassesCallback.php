@@ -31,8 +31,14 @@ class ClassesCallback implements CallbackInterface
             $entries[$name] = array_filter([
                 'name'             => $translation->getName() ?? $name,
                 'description'      => $translation->getDescription() ?? $term->getDescription(),
-                'customWeaponProf' => $translation->getCustomWeaponProf() ?? $term->getCustomWeaponProf(),
-                'customArmorProf'  => $translation->getCustomArmorProf() ?? $term->getCustomArmorProf(),
+                'customWeaponProf' => implode(
+                    ';',
+                        $translation->getCustomWeaponProf() ?? $term->getCustomWeaponProf() ?: []
+                ),
+                'customArmorProf'  => implode(
+                    ';',
+                        $translation->getCustomArmorProf() ?? $term->getCustomArmorProf() ?: []
+                ),
             ]);
         }
 

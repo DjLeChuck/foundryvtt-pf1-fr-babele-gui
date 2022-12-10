@@ -33,7 +33,10 @@ class FeatsCallback implements CallbackInterface
                 'description'      => $translation->getDescription() ?? $term->getDescription(),
                 'actions'          => $translation->getActions() ?? $term->getActions(),
                 'contextNotes'     => $translation->getContextNotes() ?? $term->getContextNotes(),
-                'customWeaponProf' => $translation->getCustomWeaponProf() ?? $term->getCustomWeaponProf(),
+                'customWeaponProf' => implode(
+                    ';',
+                        $translation->getCustomWeaponProf() ?? $term->getCustomWeaponProf() ?: []
+                ),
                 'tags'             => $translation->getTags() ?? $term->getTags(),
             ]);
         }

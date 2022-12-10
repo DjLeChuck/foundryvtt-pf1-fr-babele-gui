@@ -28,7 +28,7 @@ class Spells
             'converter' => 'learnedAt',
         ],
         'materials'          => 'system.materials.value',
-        'subschool'          => 'system.subschools',
+        'subschool'          => 'system.subschool',
         'types'              => 'system.types',
     ];
     public iterable $entries;
