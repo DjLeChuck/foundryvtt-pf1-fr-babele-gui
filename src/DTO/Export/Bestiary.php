@@ -6,8 +6,14 @@ class Bestiary
 {
     public string $label = '__OVERRIDE__';
     public array $mapping = [
-        'img'   => 'img',
-        'token' => 'prototypeToken.texture.src',
+        'img'   => [
+            'path'      => 'img',
+            'converter' => 'pf2TokensBestiaries',
+        ],
+        'token' => [
+            'path'      => 'prototypeToken.texture.src',
+            'converter' => 'pf2TokensBestiaries',
+        ],
     ];
     public iterable $entries;
 
