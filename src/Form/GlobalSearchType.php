@@ -19,6 +19,7 @@ class GlobalSearchType extends AbstractType
                     'placeholder' => 'Recherche globale...',
                 ],
             ])
+            ->add('page', HiddenType::class)
             ->add('token', HiddenType::class)
         ;
     }
