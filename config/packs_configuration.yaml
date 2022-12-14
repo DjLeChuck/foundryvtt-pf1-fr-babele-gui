@@ -72,6 +72,10 @@ parameters:
             dto: App\DTO\Export\MythicPaths
             packName: pf1.mythicpaths.json
             entity: App\Entity\TermMythicPath
+        pf1e-rules:
+            dto: App\DTO\Export\PF1ERules
+            packName: pf1.pf1e-rules.json
+            entity: App\Entity\TermJournal
         races:
             dto: App\DTO\Export\Races
             packName: pf1.races.json

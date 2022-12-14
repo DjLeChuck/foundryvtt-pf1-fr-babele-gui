@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\EventSubscriber\FormSubscriber;
 
 use App\Entity\TermTranslation;
+use Doctrine\ORM\Proxy\Proxy;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\Event\PreSetDataEvent;
 use Symfony\Component\Form\FormEvents;
@@ -29,13 +30,18 @@ class AddSpecificTranslationFieldsSubscriber implements EventSubscriberInterface
 
     public function onPreSetData(PreSetDataEvent $event): void
     {
-        $entityClass = $event->getData()::class;
+        $entity = $event->getData();
+        $entityClass = $entity::class;
         $formType = sprintf(
             'App\Form\Term\TranslationsType\%sType',
             str_replace(TermTranslation::class, '', $entityClass)
         );
 
         if (!class_exists($formType)) {
+            if ($entity instanceof Proxy) {
+                return;
+            }
+
             throw new \InvalidArgumentException(
                 sprintf('Le FormType %s spécifique à %s n\'existe pas', $formType, $entityClass)
             );

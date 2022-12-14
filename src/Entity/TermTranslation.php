@@ -22,6 +22,8 @@ use Gedmo\Mapping\Annotation as Gedmo;
     'commonbuffs'        => TermTranslationCommonBuff::class,
     'feats'              => TermTranslationFeat::class,
     'items'              => TermTranslationItem::class,
+    'journal'            => TermTranslationJournal::class,
+    'journal-entry'      => TermTranslationJournalEntry::class,
     'monster-templates'  => TermTranslationMonsterTemplate::class,
     'mythic-paths'       => TermTranslationMythicPath::class,
     'races'              => TermTranslationRace::class,
