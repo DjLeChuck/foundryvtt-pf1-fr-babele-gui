@@ -12,7 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Table(name: 'app_term_translation_journal')]
 class TermTranslationJournal extends TermTranslation
 {
-    #[ORM\OneToMany(mappedBy: 'journal', targetEntity: TermTranslationJournalEntry::class, fetch: 'EAGER')]
+    #[ORM\OneToMany(mappedBy: 'journal', targetEntity: TermTranslationJournalEntry::class, cascade: ['all'], fetch: 'EAGER')]
     private Collection $entries;
 
     public function __construct()
@@ -32,6 +32,7 @@ class TermTranslationJournal extends TermTranslation
     {
         if (!$this->entries->contains($entry)) {
             $this->entries[] = $entry;
+            $entry->setJournal($this);
         }
     }
 
@@ -39,6 +40,9 @@ class TermTranslationJournal extends TermTranslation
     {
         if ($this->entries->contains($entry)) {
             $this->entries->removeElement($entry);
+            if ($entry->getJournal() === $this) {
+                $entry->setJournal(null);
+            }
         }
     }
 }

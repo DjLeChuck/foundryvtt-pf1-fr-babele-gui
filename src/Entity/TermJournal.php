@@ -13,7 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Table(name: 'app_term_journal')]
 class TermJournal extends Term
 {
-    #[ORM\OneToMany(mappedBy: 'journal', targetEntity: TermJournalEntry::class, fetch: 'EAGER')]
+    #[ORM\OneToMany(mappedBy: 'journal', targetEntity: TermJournalEntry::class, cascade: ['all'], fetch: 'EAGER')]
     private Collection $entries;
 
     public function __construct()
