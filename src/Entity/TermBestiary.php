@@ -12,4 +12,9 @@ use Doctrine\ORM\Mapping as ORM;
 class TermBestiary extends Term
 {
     use BestiaryTrait;
+
+    public function getCompendiumLinkTag(): string
+    {
+        return sprintf('@UUID[Compendium.pf1-bestiary.%s.%s]{__label__}', $this->getPack(), $this->getPackId());
+    }
 }

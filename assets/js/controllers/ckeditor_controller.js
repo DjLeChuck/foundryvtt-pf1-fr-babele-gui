@@ -1,5 +1,5 @@
 import { Controller } from '@hotwired/stimulus';
-import { useIntersection } from 'stimulus-use';
+import { useDispatch, useIntersection } from 'stimulus-use';
 import BalloonEditor from '../../vendor/ckeditor/ckeditor';
 
 /* stimulusFetch: 'lazy' */
@@ -10,6 +10,7 @@ export default class extends Controller {
 
   connect() {
     useIntersection(this);
+    useDispatch(this);
   }
 
   appear() {
@@ -26,6 +27,10 @@ export default class extends Controller {
           editor.model.document.on('change:data', () => {
             this.contentTarget.innerText = editor.getData();
           });
+
+          editor.keystrokes.set('Ctrl+space', () => this.dispatch('search', {
+            model: editor.model,
+          }));
         })
         .catch(error => {
           console.error(error);
@@ -39,5 +44,31 @@ export default class extends Controller {
     }
 
     this.editor.setData(this.contentTarget.innerText);
+  }
+
+  addCompendiumLink(e) {
+    if (!this.editor) {
+      return;
+    }
+
+    const model = this.editor.model;
+
+    model.change(writer => {
+      const range = model.document.selection.getFirstRange();
+      let textAttributes = {};
+      let text = '';
+
+      for (const item of range.getItems()) {
+        if (item.is('$text') || item.is('$textProxy')) {
+          text = item.data;
+          textAttributes = item.getAttributes();
+          break;
+        }
+      }
+
+      if (text.length) {
+        model.insertContent(writer.createText(e.detail.value.replace('__label__', text), textAttributes), range);
+      }
+    });
   }
 }

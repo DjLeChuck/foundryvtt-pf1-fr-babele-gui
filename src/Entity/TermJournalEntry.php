@@ -24,4 +24,13 @@ class TermJournalEntry extends Term
     {
         $this->journal = $journal;
     }
+
+    public function getCompendiumLinkTag(): string
+    {
+        return sprintf(
+            '@UUID[Compendium.pf1.pf1e-rules.%s.JournalEntryPage.%s]{__label__}',
+            $this->getJournal()?->getPackId(),
+            $this->getPackId()
+        );
+    }
 }

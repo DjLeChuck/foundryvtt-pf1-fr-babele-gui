@@ -2,6 +2,7 @@
   "devDependencies": {
     "@hotwired/stimulus": "^3.0.0",
     "@symfony/stimulus-bridge": "^3.2.0",
+    "@symfony/ux-autocomplete": "file:vendor/symfony/ux-autocomplete/assets",
     "@symfony/webpack-encore": "^3.0.0",
     "bootstrap": "^5.2.0",
     "core-js": "^3.23.0",
@@ -10,6 +11,7 @@
     "sass": "^1.54.1",
     "sass-loader": "^13.0.2",
     "stimulus-use": "^0.50.0",
+    "tom-select": "^2.2.2",
     "webpack-notifier": "^1.15.0"
   },
   "license": "MIT",

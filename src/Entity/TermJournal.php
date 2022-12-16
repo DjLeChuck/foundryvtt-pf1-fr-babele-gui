@@ -37,7 +37,7 @@ class TermJournal extends Term
         }
     }
 
-    public function removeProduct(TermJournalEntry $entry): void
+    public function removeEntry(TermJournalEntry $entry): void
     {
         if ($this->entries->contains($entry)) {
             $this->entries->removeElement($entry);
@@ -45,5 +45,10 @@ class TermJournal extends Term
                 $entry->setJournal(null);
             }
         }
+    }
+
+    public function getCompendiumLinkTag(): string
+    {
+        return sprintf('@UUID[Compendium.pf1.pf1e-rules.%s]{__label__}', $this->getPackId());
     }
 }

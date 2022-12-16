@@ -1,7 +1,10 @@
 <div class="row">
   <div class="col-6" {{ stimulus_target('translate', 'input') }}>{{ attribute(term, field.vars.name)|raw }}</div>
   <div class="col-6">
-    <div {{ stimulus_controller('ckeditor') }} {{ stimulus_action('ckeditor', 'update', 'translate:translated@window') }}>
+    <div {{ stimulus_controller('ckeditor')|stimulus_controller('compendium-link') }}
+        {{ stimulus_action('ckeditor', 'update', 'translate:translated@window')
+        |stimulus_action('compendium-link', 'search', 'ckeditor:search')
+        |stimulus_action('ckeditor', 'addCompendiumLink', 'search-modal:result@window') }}>
       {% if allow_translation ?? false %}
         <button type="button" class="btn" {{ stimulus_action('translate', 'do') }}>
           <span class="spinner-border spinner-border-sm visually-hidden" role="status"

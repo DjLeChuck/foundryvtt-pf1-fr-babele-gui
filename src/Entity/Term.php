@@ -140,4 +140,9 @@ class Term implements TermInterface
     {
         return ($this->nameSeemsUntranslated() ? 0 : 1) + ($this->descriptionSeemsUntranslated() ? 0 : 1);
     }
+
+    public function getCompendiumLinkTag(): string
+    {
+        return sprintf('@UUID[Compendium.pf1.%s.%s]{__label__}', $this->getPack(), $this->getPackId());
+    }
 }

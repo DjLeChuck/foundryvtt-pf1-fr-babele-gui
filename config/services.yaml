@@ -57,3 +57,8 @@ services:
     App\Serializer\Callback:
         arguments:
             - !tagged_iterator 'app.serializer_callback'
+
+    App\Autocomplete\CompendiumEntityTypeAutocompleter:
+        decorates: 'ux.autocomplete.wrapped_entity_type_autocompleter.compendium_autocomplete_type'
+        arguments:
+            - '@.inner'
