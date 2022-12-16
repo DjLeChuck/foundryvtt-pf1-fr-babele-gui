@@ -17,6 +17,10 @@ export default class extends Controller {
     }
 
     this.modal.show();
+
+    if (this.hasTermTarget) {
+      this.termTarget.tomselect.focus();
+    }
   }
 
   close() {
