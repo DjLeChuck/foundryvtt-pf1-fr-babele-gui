@@ -20,7 +20,7 @@ class Spells
             'converter' => 'learnedAt',
         ],
         'learnedAtSubdomain' => [
-            'path'      => 'system.learnedAt.subdomain',
+            'path'      => 'system.learnedAt.subDomain',
             'converter' => 'learnedAt',
         ],
         'learnedAtBloodline' => [
