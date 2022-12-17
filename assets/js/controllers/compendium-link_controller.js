@@ -22,7 +22,7 @@ export default class extends Controller {
       }
 
       if (text.length) {
-        this.dispatch('search');
+        this.dispatch('search', { text });
       }
     });
   }

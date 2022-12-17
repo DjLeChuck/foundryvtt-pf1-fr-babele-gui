@@ -9,9 +9,10 @@ export default class extends Controller {
     useDispatch(this);
 
     this.modal = new Modal(this.element);
+    this.element.addEventListener('hide.bs.modal', () => this.hasTermTarget && this.termTarget.tomselect.clear())
   }
 
-  open() {
+  open(e) {
     if (!this.modal) {
       return;
     }
@@ -19,6 +20,11 @@ export default class extends Controller {
     this.modal.show();
 
     if (this.hasTermTarget) {
+      const text = e?.detail?.text;
+      if (text) {
+        this.termTarget.tomselect.load(text.replace(/s$/, ''));
+      }
+
       this.termTarget.tomselect.focus();
     }
   }
