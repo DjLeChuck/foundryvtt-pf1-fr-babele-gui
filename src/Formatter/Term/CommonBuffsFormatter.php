@@ -29,7 +29,7 @@ class CommonBuffsFormatter extends AbstractFormatter
 
         $flags = [];
         foreach ($dataset['data']['flags']['dictionary'] ?? [] as $value) {
-            $flags[] = end($value);
+            $flags[] = $value;
         }
         $term->setDictionaryFlags($flags);
 
