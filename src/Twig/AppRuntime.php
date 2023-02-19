@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Twig;
 
 use App\Entity\TermTranslationBestiary;
+use App\Entity\TermTranslationSpell;
 use App\Form\CompendiumSearchType;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormView;
@@ -31,6 +32,13 @@ class AppRuntime implements RuntimeExtensionInterface
 
             // Cas particulier -> Image des bestiaires toujours affichée
             if ('img' === $child->vars['name'] && $child->parent->vars['data'] instanceof TermTranslationBestiary) {
+                $result[] = $child;
+
+                continue;
+            }
+
+            // Cas particulier -> Description des sorts toujours affichée
+            if ('description' === $child->vars['name'] && $child->parent->vars['data'] instanceof TermTranslationSpell) {
                 $result[] = $child;
 
                 continue;
